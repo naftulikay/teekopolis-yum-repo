@@ -11,6 +11,7 @@ fetch_sources:
 	$(SPECTOOL) -g -S -C sources/ specs/lame.spec
 	$(SPECTOOL) -g -S -C sources/ specs/libdvdcss.spec
 	$(SPECTOOL) -g -S -C sources/ specs/libfdk-aac.spec
+	$(SPECTOOL) -g -S -C sources/ specs/libmfx.spec
 	$(SPECTOOL) -g -S -C sources/ specs/libvo-aacenc.spec
 	$(SPECTOOL) -g -S -C sources/ specs/libvo-amrwbenc.spec
 	$(SPECTOOL) -g -S -C sources/ specs/libxvidcore.spec
@@ -22,6 +23,7 @@ build_srpms:
 	mock --buildsrpm --spec specs/lame.spec --sources sources/ --resultdir build/source
 	mock --buildsrpm --spec specs/libdvdcss.spec --sources sources/ --resultdir build/source
 	mock --buildsrpm --spec specs/libfdk-aac.spec --sources sources/ --resultdir build/source
+	mock --buildsrpm --spec specs/libmfx.spec --sources sources/ --resultdir build/source
 	mock --buildsrpm --spec specs/libvo-aacenc.spec --sources sources/ --resultdir build/source
 	mock --buildsrpm --spec specs/libvo-amrwbenc.spec --sources sources/ --resultdir build/source
 	mock --buildsrpm --spec specs/libxvidcore.spec --sources sources/ --resultdir build/source
