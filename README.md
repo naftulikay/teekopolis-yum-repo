@@ -33,7 +33,6 @@ Good:
     * libmfx
     * makemkv
     * x264
-    * x265
  - [ ] Cross-compile x265 for 8, 10, and 12-bit encoding ([example][x265-xcompile]).
 
  [x265-xcompile]: https://bitbucket.org/multicoreware/x265/src/dc62b47dd0d98f732165345883edac55320baec1/build/linux/multilib.sh?at=default&fileviewer=file-view-default

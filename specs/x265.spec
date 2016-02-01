@@ -13,7 +13,7 @@ Vendor: multicoreware
 Packager: Naftuli Tzvi Kay <rfkrocktk@gmail.com>
 URL: https://github.com/videolan/x265
 Group: Applications/Multimedia
-Source: x265-1.8.tar.gz
+Source: https://download.videolan.org/pub/videolan/x265/x265_1.8.tar.gz
 Requires: libx265 = %{package_version}
 BuildRequires: yasm >= 1.3.0, cmake, ncurses-devel
 
@@ -25,7 +25,7 @@ x265 HEVC Video Encoder
 
 %prep
 
-%setup
+%setup -n x265_%{package_version}
 %patch0 -p1
 %patch1 -p1
 

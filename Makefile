@@ -14,6 +14,7 @@ fetch_sources:
 	$(SPECTOOL) -g -S -C sources/ specs/libvo-aacenc.spec
 	$(SPECTOOL) -g -S -C sources/ specs/libvo-amrwbenc.spec
 	$(SPECTOOL) -g -S -C sources/ specs/libxvidcore.spec
+	$(SPECTOOL) -g -S -C sources/ specs/x265.spec
 
 build_srpms:
 	mock --buildsrpm --spec specs/aacplusenc.spec --sources sources/ --resultdir build/source
@@ -23,6 +24,7 @@ build_srpms:
 	mock --buildsrpm --spec specs/libvo-aacenc.spec --sources sources/ --resultdir build/source
 	mock --buildsrpm --spec specs/libvo-amrwbenc.spec --sources sources/ --resultdir build/source
 	mock --buildsrpm --spec specs/libxvidcore.spec --sources sources/ --resultdir build/source
+	mock --buildsrpm --spec specs/x265.spec --sources sources/ --resultdir build/source
 
 build_rpms:
 	# build i686 RPMS
