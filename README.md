@@ -28,7 +28,6 @@ Good:
 ## To Do
 
  - [ ] Automate downloading of sources and stuff.
-    * aacplusenc
     * ffmpeg
     * handbrake
     * libmfx

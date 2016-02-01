@@ -10,8 +10,7 @@ Release: %{package_release}%{?dist}
 Summary: AAC+ encoder.
 License: LGPL, but worse.
 Source0: http://ffmpeg.gusari.org/uploads/libaacplus-2.0.2.tar.gz
-Source1: libaacplus-source-proprietary.zip
-# http://www.3gpp.org/ftp/Specs/archive/26_series/26.410/26410-800.zip
+Source1: http://www.3gpp.org/ftp/Specs/archive/26_series/26.410/26410-800.zip
 URL: http://tipok.org.ua/node/17
 
 Requires: libaacplus
