@@ -1,0 +1,22 @@
+---
+ - hosts: all
+   tasks:
+       # fedora 23 cloud comes _empty_ by default
+       - name: install dnf python bindings
+         command: dnf install -y python-dnf
+         args:
+             creates: /usr/lib/python2.7/site-packages/dnf/
+       - name: install build packages
+         dnf: name={{ item }} state=present
+         with_items:
+             # rpm stuff
+             - mock
+             - rpm-build
+             - rpmdevtools
+             # build tools
+             - make
+             - gcc
+             # extra requirements
+             - libselinux-python
+        - name: add user to mock group
+          user: name=vagrant group=vagrant groups=mock
