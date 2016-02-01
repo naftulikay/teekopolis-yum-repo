@@ -13,7 +13,7 @@ Vendor: The LAME Project
 Packager: Naftuli Tzvi Kay <rfkrocktk@gmail.com>
 URL: http://www.mp3dev.org
 Group: Applications/Multimedia
-Source: lame-%{version}.tar.gz
+Source: http://downloads.sourceforge.net/project/lame/lame/3.99/lame-%{package_version}.tar.gz
 Requires: ncurses >= 5.0
 
 BuildRequires: ncurses-devel

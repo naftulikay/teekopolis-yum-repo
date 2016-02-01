@@ -1,0 +1,21 @@
+From 4820e2ac4dd651d29fa3e5f169c4887fceb0ce9f Mon Sep 17 00:00:00 2001
+From: Naftuli Tzvi Kay <rfkrocktk@gmail.com>
+Date: Sun, 24 Jan 2016 11:24:55 -0800
+Subject: [PATCH] Enable PIC compilation for FFMPEG
+
+---
+ contrib/ffmpeg/module.defs | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/contrib/ffmpeg/module.defs b/contrib/ffmpeg/module.defs
+index 3ed9616..c083c27 100644
+--- a/contrib/ffmpeg/module.defs
++++ b/contrib/ffmpeg/module.defs
+@@ -40,6 +40,7 @@ FFMPEG.CONFIGURE.extra = \
+     --disable-decoder=libvpx_vp8 \
+     --enable-zlib \
+     --enable-bzlib \
++    --enable-pic \
+     --cc="$(FFMPEG.GCC.gcc)" \
+     --extra-ldflags="$(call fn.ARGS,FFMPEG.GCC,*archs *sysroot *minver ?extra) -L$(call fn.ABSOLUTE,$(CONTRIB.build/)lib)"
+ 

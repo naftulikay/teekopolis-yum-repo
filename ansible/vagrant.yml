@@ -18,5 +18,5 @@
              - gcc
              # extra requirements
              - libselinux-python
-        - name: add user to mock group
-          user: name=vagrant group=vagrant groups=mock
+       - name: add user to mock group
+         user: name=vagrant group=vagrant groups=mock

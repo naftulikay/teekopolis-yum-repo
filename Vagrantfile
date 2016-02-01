@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     fedora23.vm.hostname = "fedora23"
 
     fedora23.vm.provision "ansible_local" do |ansible|
-      ansible.playbook = "ansible/fedora23.yml"
+      ansible.playbook = "ansible/vagrant.yml"
       ansible.sudo = true
     end
 

@@ -1,0 +1,24 @@
+diff -up x265_1.8/source/CMakeLists.txt.pic x265_1.8/source/CMakeLists.txt
+--- x265_1.8/source/CMakeLists.txt.pic	2015-09-22 10:10:07.000000000 +0200
++++ x265_1.8/source/CMakeLists.txt	2015-10-25 22:43:12.666153586 +0100
+@@ -158,7 +162,7 @@ if(GCC)
+     add_definitions(-Wall -Wextra -Wshadow)
+     add_definitions(-D__STDC_LIMIT_MACROS=1)
+     if(ENABLE_PIC)
+-         add_definitions(-fPIC)
++         add_definitions(-fPIC -DPIC)
+     endif(ENABLE_PIC)
+     if(NATIVE_BUILD)
+         if(INTEL_CXX)
+diff -up x265_1.8/source/test/checkasm-a.asm.pic x265_1.8/source/test/checkasm-a.asm
+--- x265_1.8/source/test/checkasm-a.asm.pic	2015-09-22 10:10:07.000000000 +0200
++++ x265_1.8/source/test/checkasm-a.asm	2015-10-25 23:23:45.041877640 +0100
+@@ -154,7 +154,7 @@ cglobal checkasm_call, 2,15,16,max_args*
+     mov  r9, rax
+     mov r10, rdx
+     lea  r0, [error_message]
+-    call puts
++    call puts wrt ..plt
+     mov  r1, [rsp+max_args*8]
+     mov  dword [r1], 0
+     mov  rdx, r10
