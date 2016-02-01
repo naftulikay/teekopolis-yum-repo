@@ -2,7 +2,8 @@
 
 %define package_name x264
 %define package_version 148
-%define package_release 1
+%define package_release 20160201
+%define package_buildtime 2245
 
 Summary: The x264 H.264 video encoder.
 Name: %{package_name}
@@ -13,7 +14,7 @@ Vendor: VideoLAN
 Packager: Naftuli Tzvi Kay <rfkrocktk@gmail.com>
 URL: https://www.videolan.org/developers/x264.html
 Group: Applications/Multimedia
-Source: x264-%{package_version}.tar.bz2
+Source: https://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-%{package_release}-%{package_buildtime}-stable.tar.bz2
 # FIXME x264 doesn't use libx264.so, it is still statically compiled
 BuildRequires: yasm
 
@@ -22,7 +23,7 @@ x264 H.264 Video Encoder
 
 %prep
 
-%setup
+%setup -n x264-snapshot-%{package_release}-%{package_buildtime}-stable
 
 %configure \
     --enable-pic \
