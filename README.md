@@ -34,7 +34,6 @@ Good:
     * libdvdcss
     * libfdk-aac
     * libmfx
-    * libvo-amrwbenc
     * makemkv
     * x264
     * x265
