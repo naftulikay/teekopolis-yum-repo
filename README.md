@@ -31,7 +31,6 @@ Good:
     * aacplusenc
     * ffmpeg
     * handbrake
-    * libfdk-aac
     * libmfx
     * makemkv
     * x264
