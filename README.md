@@ -28,7 +28,6 @@ Good:
 ## To Do
 
  - [ ] Automate downloading of sources and stuff.
-    * ffmpeg
     * handbrake
     * makemkv
  - [ ] Cross-compile x265 for 8, 10, and 12-bit encoding ([example][x265-xcompile]).

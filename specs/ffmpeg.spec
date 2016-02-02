@@ -1,7 +1,7 @@
 %global _hardened_build 1
 
 %define package_name ffmpeg
-%define package_version 2.8.5
+%define package_version 2.8.6
 %define package_release 1
 %define package_epoch 1
 
