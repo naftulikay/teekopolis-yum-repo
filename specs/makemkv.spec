@@ -25,7 +25,6 @@ ExclusiveArch:  %{ix86} x86_64
 
 Source0:        http://www.makemkv.com/download/makemkv-oss-%{version}.tar.gz
 Source1:        http://www.makemkv.com/download/makemkv-bin-%{version}.tar.gz
-Source2:        makemkv-changelog.txt
 
 Patch0:         makemkv-patch-0001-oss-no-strip.patch
 
@@ -70,7 +69,6 @@ This package contains the DTS decoder command line tool.
 pushd makemkv-oss-%{version}
 %patch0 -p1
 popd
-cp %{SOURCE2} .
 
 %build
 # accept eula
@@ -120,7 +118,6 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %files
 %doc makemkv-bin-%{version}/src/eula_en_linux.txt
 %doc makemkv-oss-%{version}/License.txt
-%doc makemkv-changelog.txt
 %config(noreplace) %{_sysconfdir}/profile.d/makemkv.*sh
 %{_bindir}/makemkv
 %{_bindir}/makemkvcon
