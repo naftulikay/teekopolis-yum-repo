@@ -36,6 +36,9 @@ Good:
 
 ## To Do
 
+ - [ ] Build actual RPM repo structure:
+        fedora-23-x86_64/*.rpm
+                        repodata/
  - [ ] AWS pull down from and push to S3.
  - [ ] Package signing.
  - [ ] Cross-compile x265 for 8, 10, and 12-bit encoding ([example][x265-xcompile]).
