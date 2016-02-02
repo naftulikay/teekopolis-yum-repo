@@ -20,3 +20,5 @@
              - libselinux-python
        - name: add user to mock group
          user: name=vagrant group=vagrant groups=mock
+   roles:
+       - { role: prunerpmrepo }

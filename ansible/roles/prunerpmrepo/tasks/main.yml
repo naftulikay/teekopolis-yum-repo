@@ -1,0 +1,5 @@
+---
+ - name: install dependencies
+   dnf: name=PyYAML state=present
+ - name: install prune-rpm-repo
+   copy: src=prune-rpm-repo.py dest=/usr/local/bin/prune-rpm-repo owner=root group=root mode=0755

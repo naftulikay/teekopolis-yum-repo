@@ -1,0 +1,4 @@
+---
+preserve:
+    - pattern: .*
+      min-versions: 1
