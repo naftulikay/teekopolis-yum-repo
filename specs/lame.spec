@@ -2,7 +2,7 @@
 
 %define package_name lame
 %define package_version 3.99.5
-%define package_release 1
+%define package_release 2
 
 Summary: LAME Ain't an MP3 Encoder.
 Name: %{package_name}
@@ -74,7 +74,6 @@ Summary: Shared libraries for LAME.
 Shared libraries for LAME.
 %files -n libmp3lame
 %{_libdir}/libmp3lame.so.*
-%{_libdir}/libmp3lame.so
 %exclude %{_libdir}/libmp3lame.a
 %exclude %{_libdir}/libmp3lame.la
 
@@ -86,10 +85,13 @@ Shared libraries for LAME (development files).
 %files -n libmp3lame-devel
 %defattr (-, root, root)
 %doc API HACKING STYLEGUIDE
+%{_libdir}/libmp3lame.so
 %{_includedir}/*
 %{_prefix}/share/doc/lame/html/*.html
 
 %changelog
 
+* Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 3.99.5-2
+- Move libmp3lame.so symlink to the devel package.
 * Mon Jan 11 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 3.99.5-1
 - Repackaged for reasons.
