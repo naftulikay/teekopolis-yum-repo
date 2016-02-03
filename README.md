@@ -19,26 +19,15 @@ Things to fix:
  - [ ] LAME binary has an RPATH.
  - [ ] MakeMKV binaries and libraries are in bad shape.
 
-Good:
+Everything else fully passes the `checksec --file` test, returning the following:
 
- - [x] <s>ffmpeg binaries and libraries</s>
- - [x] <s>HandBrake CLI and GTK</s>
- - [x] <s>libaacplus</s>
- - [x] <s>libdvdcss</s>
- - [x] <s>libfdk-aac</s>
- - [x] <s>libmp3lame</s>
- - [x] <s>libmfx</s>
- - [x] <s>libvo-aacenc</s>
- - [x] <s>libvo-amrwbenc</s>
- - [x] <s>libxvidcore</s>
- - [x] <s>x264 binary and library</s>
- - [x] <s>x265 binary and library</s>
+```
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      FILE
+Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RUNPATH   /usr/bin/ffmpeg
+```
 
 ## To Do
 
- - [ ] Build actual RPM repo structure:
-        fedora-23-x86_64/*.rpm
-                        repodata/
  - [ ] AWS pull down from and push to S3.
  - [ ] Package signing.
  - [ ] Cross-compile x265 for 8, 10, and 12-bit encoding ([example][x265-xcompile]).

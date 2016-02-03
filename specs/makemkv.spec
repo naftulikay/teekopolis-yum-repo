@@ -13,7 +13,7 @@
 
 %define package_name makemkv
 %define package_version 1.9.9
-%define package_release 1
+%define package_release 2
 
 Summary:        DVD and Blu-ray to MKV converter and network streamer.
 Name:           %{package_name}
@@ -36,7 +36,11 @@ BuildRequires:  pkgconfig(libavutil)
 BuildRequires:	qt4-devel
 
 Requires:       hicolor-icon-theme
-Requires:       mmdtsdec = %{version}-%{release}
+%ifarch x86_64
+Requires: mmdtsdec(%{__isa_name}-32)
+%else
+Requires: mmdtsdec%{_isa}
+%endif
 
 %description
 MakeMKV is your one-click solution to convert video that you own into free and
@@ -133,3 +137,8 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %doc makemkv-bin-%{version}/src/eula_en_linux.txt
 %{_bindir}/mmdtsdec
 %endif
+
+%changelog
+
+ * Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.9.9-2
+ - Fix cross architecture dependencies.

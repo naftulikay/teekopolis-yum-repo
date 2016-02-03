@@ -41,17 +41,15 @@ build_rpms:
 	mockchain -r fedora-23-x86_64 -l build --recurse build/source/*.src.rpm
 
 deploy_repo:
-	# i386
-	test -d build/repo/fedora-23-i386 || mkdir -p build/repo/fedora-23-i386
-	find build/results/fedora-23-i386 -type f -iname '*.rpm' -exec cp {} build/repo/fedora-23-i386 \;
-	createrepo build/repo/fedora-23-i386
-	# x86_64
-	test -d build/repo/fedora-23-x86_64 || mkdir -p build/repo/fedora-23-x86_64
-	find build/results/fedora-23-x86_64 -type f -iname '*.rpm' -exec cp {} build/repo/fedora-23-x86_64 \;
-	createrepo build/repo/fedora-23-x86_64
+	# copy all rpms into the repo folder
+	test -d build/repo/fedora-23 || mkdir -p build/repo/fedora-23
+	find build/results/fedora-23-i386 build/results/fedora-23-x86_64 -type f -iname '*.rpm' \
+		-exec cp {} build/repo/fedora-23 \;
+	# build the repo
+	( cd build/repo/fedora-23 && createrepo . )
 
 prune_repo:
-	prune-rpm-repo -v --config prune-repo.yml build/repo/
+	prune-rpm-repo -v --config prune-repo.yml build/repo/ build/source/
 
 clean_build:
 	find build -mindepth 1 -maxdepth 1 -not -iname '.gitignore' -exec rm -fr {} \;
