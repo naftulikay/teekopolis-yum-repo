@@ -13,11 +13,13 @@
              - mock
              - rpm-build
              - rpmdevtools
+             - createrepo
              # build tools
              - make
              - gcc
              # extra requirements
              - libselinux-python
+             - checksec
        - name: add user to mock group
          user: name=vagrant group=vagrant groups=mock
    roles:

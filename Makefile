@@ -2,7 +2,7 @@
 
 .PHONY: all
 
-all: fetch_sources build_srpms build_rpms
+all: build_srpms build_rpms
 
 fetch_sources:
 	spectool -g -S -C sources/ specs/aacplusenc.spec
@@ -19,7 +19,7 @@ fetch_sources:
 	spectool -g -S -C sources/ specs/x264.spec
 	spectool -g -S -C sources/ specs/x265.spec
 
-build_srpms:
+build_srpms: fetch_sources
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/aacplusenc.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/ffmpeg.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/lame.spec
@@ -40,8 +40,18 @@ build_rpms:
 	# build x86_64 RPMS
 	mockchain -r fedora-23-x86_64 -l build --recurse build/source/*.src.rpm
 
+deploy_repo:
+	# i386
+	test -d build/repo/fedora-23-i386 || mkdir -p build/repo/fedora-23-i386
+	find build/results/fedora-23-i386 -type f -iname '*.rpm' -exec cp {} build/repo/fedora-23-i386 \;
+	createrepo build/repo/fedora-23-i386
+	# x86_64
+	test -d build/repo/fedora-23-x86_64 || mkdir -p build/repo/fedora-23-x86_64
+	find build/results/fedora-23-x86_64 -type f -iname '*.rpm' -exec cp {} build/repo/fedora-23-x86_64 \;
+	createrepo build/repo/fedora-23-x86_64
+
 prune_repo:
-	prune-rpm-repo -v --config prune-repo.yml build/results/
+	prune-rpm-repo -v --config prune-repo.yml build/repo/
 
 clean_build:
 	find build -mindepth 1 -maxdepth 1 -not -iname '.gitignore' -exec rm -fr {} \;
