@@ -11,11 +11,11 @@ clean: clean_build clean_download
 download:
 	test -d build/repo || mkdir -p build/repo
 	# sync down the repository into build/repo
-	s3cmd sync s3://$(S3_BUCKET)/ build/repo
+	( cd build/repo && s3cmd sync s3://$(S3_BUCKET)/ ./ )
 
 upload:
 	# sync up the repository to s3
-	s3cmd sync --server-side-encryption build/repo s3://$(S3_BUCKET)
+	( cd build/repo && s3cmd sync --server-side-encryption ./ s3://$(S3_BUCKET) )
 
 fetch_sources:
 	spectool -g -S -C sources/ specs/aacplusenc.spec
