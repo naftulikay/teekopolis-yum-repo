@@ -15,7 +15,7 @@ download:
 
 upload:
 	# sync up the repository to s3
-	( cd build/repo && s3cmd sync --server-side-encryption ./ s3://$(S3_BUCKET) )
+	( cd build/repo && s3cmd sync --server-side-encryption --delete-removed ./ s3://$(S3_BUCKET) )
 
 fetch_sources:
 	spectool -g -S -C sources/ specs/aacplusenc.spec
