@@ -71,7 +71,7 @@ There are a few environment variables used by the `Makefile` that you should hav
 The AWS IAM user you use must have the following effective policy:
 
 ```
-
+{
    "Version":"2012-10-17",
    "Statement":[
       {
@@ -100,16 +100,16 @@ internet:
 
 ```
 {
-	"Version": "2012-10-17",
-	"Statement": [
-		{
-			"Sid": "AddPerm",
-			"Effect": "Allow",
-			"Principal": "*",
-			"Action": "s3:GetObject",
-			"Resource": "arn:aws:s3:::{{ bucket_name }}/*"
-		}
-	]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AddPerm",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::{{ bucket_name }}/*"
+        }
+    ]
 }
 ```
 
@@ -131,4 +131,3 @@ Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RU
 
  - [ ] AWS pull down from and push to S3.
  - [ ] Package signing.
-
