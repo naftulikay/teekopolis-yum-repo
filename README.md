@@ -128,5 +128,6 @@ Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RU
 
 ## To Do
 
- - [ ] AWS pull down from and push to S3.
- - [ ] Package signing.
+ - [ ] Test and verify package signing.
+ - [ ] x264 doesn't dynamically link to its shared library.
+ - [ ] x264 could be compiled in multiple modes maybe?
