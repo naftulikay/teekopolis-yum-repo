@@ -2,20 +2,20 @@
 
 %define package_name x264
 %define package_version 148
-%define package_release 20160203
+%define package_release 3
+%define package_builddate 20160203
 %define package_buildtime 2245
 
 Summary: The x264 H.264 video encoder.
 Name: %{package_name}
 Version: %{package_version}
-Release: %{package_release}%{?dist}
+Release: %{package_release}.%{package_builddate}%{?dist}
 License: GPLv2
 Vendor: VideoLAN
 Packager: Naftuli Tzvi Kay <rfkrocktk@gmail.com>
 URL: https://www.videolan.org/developers/x264.html
 Group: Applications/Multimedia
-Source: https://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-%{package_release}-%{package_buildtime}-stable.tar.bz2
-# FIXME x264 doesn't use libx264.so, it is still statically compiled
+Source: https://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-%{package_builddate}-%{package_buildtime}-stable.tar.bz2
 BuildRequires: yasm
 
 %description
@@ -23,12 +23,13 @@ x264 H.264 Video Encoder
 
 %prep
 
-%setup -n x264-snapshot-%{package_release}-%{package_buildtime}-stable
+%setup -n x264-snapshot-%{package_builddate}-%{package_buildtime}-stable
 
 %configure \
     --enable-pic \
     --disable-static \
-    --enable-shared
+    --enable-shared \
+    --system-libx264
 
 %build
 make %{?_smp_mflags}
@@ -66,5 +67,8 @@ x264 Shared Library (Development Files)
 %{_libdir}/pkgconfig/x264.pc
 
 %changelog
+* Thu Feb 04 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 148-3.20160203
+- Have the binary link to libx264.so instead of statically being compiled.
+
 * Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 148-20160203
 - Moved the shared object symlink to the devel package as expected.

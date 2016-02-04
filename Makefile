@@ -63,7 +63,7 @@ gen_repo_metadata:
 	( cd build/repo/fedora-23 && createrepo . )
 
 prune_repo:
-	prune-rpm-repo -v --config prune-repo.yml build/repo/ build/source/
+	prune-rpm-repo -v --config prune-repo.yml build/repo/ build/source/ build/results
 
 sign_rpms:
 	find build/repo -type f -iname '*.rpm' -exec rpmsign -D "_gpg_name $(GPG_KEY_ID)" --addsign {} \;

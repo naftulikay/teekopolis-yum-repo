@@ -129,5 +129,11 @@ Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RU
 ## To Do
 
  - [ ] Test and verify package signing.
- - [ ] x264 doesn't dynamically link to its shared library.
+ - [ ] x265 broken compilation on i386.
  - [ ] x264 could be compiled in multiple modes maybe?
+ - [ ] Package a52dec for DVD audio playback.
+ - [ ] Package VLC.
+ - [ ] Package GStreamer plugins:
+    * `gstreamer-plugins-bad`
+    * `gstreamer-plugins-ugly`
+    * `gstreamer-plugins-libav`
