@@ -14,9 +14,11 @@
              - rpm-build
              - rpmdevtools
              - createrepo
+             - rpm-sign
              # build tools
              - make
              - gcc
+             - s3cmd
              # extra requirements
              - libselinux-python
              - checksec
