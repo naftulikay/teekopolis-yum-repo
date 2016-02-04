@@ -2,7 +2,7 @@
 
 %define package_name x265
 %define package_version 1.8
-%define package_release 3
+%define package_release 4
 
 Summary: x265 HEVC Video Encoder
 Name: %{package_name}
@@ -32,6 +32,7 @@ x265 HEVC Video Encoder
 %build
 mkdir {8,10,12}bit
 
+%ifarch x86_64
 cd 12bit
 %cmake -G "Unix Makefiles" \
     -DCMAKE_SKIP_RPATH:BOOL=YES \
@@ -60,20 +61,27 @@ cd 10bit
     ../source
 make %{?_smp_mflags} x265-static
 cd ..
+%endif
 
 cd 8bit
+%ifarch x86_64
 ln -sf ../10bit/libx265.a libx265_main10.a
 ln -sf ../12bit/libx265.a libx265_main12.a
+%endif
 %cmake -G "Unix Makefiles" \
     -DCMAKE_SKIP_RPATH:BOOL=YES \
     -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=YES \
     -DENABLE_PIC:BOOL=ON \
     -DENABLE_TESTS:BOOL=ON \
+%ifarch x86_64
     -DEXTRA_LIB="x265_main10.a;x265_main12.a" \
     -DEXTRA_LINK_FLAGS=-L. \
     -DLINKED_10BIT:BOOL=ON \
     -DLINKED_12BIT:BOOL=ON \
+%endif
     ../source
+
+%ifarch x86_64
 make %{?_smp_mflags} x265-static
 
 mv libx265.a libx265_main.a
@@ -86,6 +94,9 @@ ADDLIB libx265_main12.a
 SAVE
 END
 EOF
+%else
+make %{?_smp_mflags} x265-shared
+%endif
 
 %check
 LD_LIBRARY_PATH=%{buildroot}%{_libdir} test/TestBench || :
@@ -125,6 +136,11 @@ x265 Shared Library (Development Files)
 %{_libdir}/pkgconfig/x265.pc
 
 %changelog
+* Thu Feb 04 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.8-4
+- Fix compilation for i386. x265 doesn't support high bit depth on 32-bit platforms, so compilation was failing.
+  See: https://j.mp/1oaRTkx. Therefore, on i386, we compile in only 8-bit mode. If you're still on i386, buy a new
+  computer. It's time.
+
 * Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.8-3
 - Moved the shared object symlink to the devel package as expected.
 
