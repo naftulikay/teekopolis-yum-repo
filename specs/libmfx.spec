@@ -2,7 +2,7 @@
 
 %define package_name libmfx
 %define package_version
-%define package_release 2
+%define package_release 3
 %define git_commit 9f4a84d73fb73d430f07a80cea3688c424439f6a
 %define git_commit_short %(c=%{git_commit}; echo ${c:0:8})
 %define realname mfx_dispatch
@@ -53,8 +53,7 @@ make %{?_smp_mflags}
 %files
 %{!?_licensedir:%global license %%doc}
 %license COPYING
-%{_libdir}/*.so
-%{_libdir}/*.so.*
+%{_libdir}/libmfx.so.*
 %exclude %{_libdir}/libmfx.la
 
 %package devel
@@ -65,9 +64,13 @@ The libmfx-devel package contains libraries and header files for
 developing applications that use libmfx.
 %files devel
 %{_includedir}/*
+%{_libdir}/libmfx.so
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.16.0-3.9f4a84d7
+- Moved the shared object symlink to the devel package as expected.
+
 * Sun Dec 13 2015 Simone Caronni <negativo17@gmail.com> - 0.0.0-2.8220f46
 - Fix build requirements.
 

@@ -2,7 +2,7 @@
 
 %define package_name libvo-amrwbenc
 %define package_version 0.1.3
-%define package_release 1
+%define package_release 2
 
 Name:           %{package_name}
 Version:        %{package_version}
@@ -35,8 +35,7 @@ make %{?_smp_mflags}
 %{!?_licensedir:%global license %%doc}
 %license COPYING NOTICE
 %doc ChangeLog
-%{_libdir}/*.so
-%{_libdir}/*.so.*
+%{_libdir}/libvo-amrwbenc.so.*
 %exclude %{_libdir}/*.la
 
 %package devel
@@ -47,8 +46,12 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 %files devel
 %{_includedir}/vo-amrwbenc/*.h
+%{_libdir}/libvo-amrwbenc.so
 %{_libdir}/pkgconfig/vo-amrwbenc.pc
 
 %changelog
+* Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.1.3-2
+- Moved the shared object symlink to the devel package as expected.
+
 * Tue Jan 19 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.1.3-1
 - Repackaged.

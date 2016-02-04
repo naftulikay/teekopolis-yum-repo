@@ -2,7 +2,7 @@
 
 %define package_name libvo-aacenc
 %define package_version 0.1.3
-%define package_release 2
+%define package_release 3
 
 Name:           %{package_name}
 Version:        %{package_version}
@@ -35,8 +35,7 @@ make %{?_smp_mflags}
 %{!?_licensedir:%global license %%doc}
 %license COPYING NOTICE
 %doc ChangeLog
-%{_libdir}/*.so
-%{_libdir}/*.so.*
+%{_libdir}/libvo-aacenc.so.*
 %exclude %{_libdir}/*.la
 
 %package devel
@@ -47,10 +46,15 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 %files devel
 %{_includedir}/vo-aacenc/*.h
+%{_libdir}/libvo-aacenc.so
 %{_libdir}/pkgconfig/vo-aacenc.pc
 
 %changelog
+* Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.1.3-3
+- Moved the shared object symlink to the devel package as expected.
+
 * Tue Jan 19 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.1.3-2
 - Repackaged.
+
 * Fri Nov 20 2015 Simone Caronni <negativo17@gmail.com> - 0.1.3-1
 - First build.

@@ -2,7 +2,7 @@
 
 %define package_name x264
 %define package_version 148
-%define package_release 20160201
+%define package_release 20160203
 %define package_buildtime 2245
 
 Summary: The x264 H.264 video encoder.
@@ -47,7 +47,6 @@ Summary: x264 Shared Library
 x264 Shared Library
 # files
 %files -n libx264
-%{_libdir}/libx264.so
 %{_libdir}/libx264.so.*
 # post
 %post -n libx264 -p /sbin/ldconfig
@@ -63,4 +62,9 @@ x264 Shared Library (Development Files)
 %files -n libx264-devel
 %{_includedir}/x264.h
 %{_includedir}/x264_config.h
+%{_libdir}/libx264.so
 %{_libdir}/pkgconfig/x264.pc
+
+%changelog
+* Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 148-20160203
+- Moved the shared object symlink to the devel package as expected.

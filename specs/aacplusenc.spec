@@ -2,7 +2,7 @@
 
 %define package_name aacplusenc
 %define package_version 2.0.2
-%define package_release 1
+%define package_release 2
 
 Name: %{package_name}
 Version: %{package_version}
@@ -45,7 +45,6 @@ Summary: libaacplus
 %description -n libaacplus
 libaacplus
 %files -n libaacplus
-%{_libdir}/libaacplus.so
 %{_libdir}/libaacplus.so.*
 %exclude %{_libdir}/libaacplus.la
 %post -n libaacplus -p /sbin/ldconfig
@@ -57,4 +56,9 @@ Summary: libaacplus-devel
 libaacplus-devel
 %files -n libaacplus-devel
 %{_includedir}/aacplus.h
+%{_libdir}/libaacplus.so
 %{_libdir}/pkgconfig/aacplus.pc
+
+%changelog
+* Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 2.0.2-2
+- Moved the shared object symlink to the devel package as expected.

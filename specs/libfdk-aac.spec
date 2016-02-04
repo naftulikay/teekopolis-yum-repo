@@ -2,7 +2,7 @@
 
 %define package_name libfdk-aac
 %define package_version 0.1.4
-%define package_release 1
+%define package_release 2
 
 Name:           %{package_name}
 Version:        %{package_version}
@@ -34,8 +34,7 @@ Advanced Audio Coding Decoder/Encoder Library.
 %{!?_licensedir:%global license %%doc}
 %license NOTICE
 %doc ChangeLog
-%{_libdir}/*.so
-%{_libdir}/*.so.*
+%{_libdir}/libfdk-aac.so.*
 %exclude %{_libdir}/libfdk-aac.la
 
 %package        devel
@@ -47,8 +46,12 @@ developing applications that use libfdk-aac.
 %files devel
 %doc documentation/*
 %{_includedir}/*
+%{_libdir}/libfdk-aac.so
 %{_libdir}/pkgconfig/fdk-aac.pc
 
 %changelog
+* Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.1.4-2
+- Moved the shared object symlink to the devel package as expected.
+
 * Fri Nov 13 2015 Simone Caronni <negativo17@gmail.com> - 0.1.4-1
 - First build.

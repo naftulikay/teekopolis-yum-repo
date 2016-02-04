@@ -2,7 +2,7 @@
 
 %define package_name libdvdcss
 %define package_version 1.4.0
-%define package_release 1
+%define package_release 2
 
 Summary:        A portable abstraction library for DVD decryption
 Name:           %{package_name}
@@ -50,14 +50,18 @@ rm -fr %{buildroot}%{_docdir}/%{name}
 %doc AUTHORS COPYING ChangeLog README NEWS
 %exclude %{_libdir}/%{name}.a
 %exclude %{_libdir}/%{name}.la
-%{_libdir}/%{name}.so*
+%{_libdir}/libdvdcss.so.*
 
 %files devel
 %doc doc/html
 %{_includedir}/dvdcss
-%{_libdir}/pkgconfig/%{name}.pc
+%{_libdir}/libdvdcss.so
+%{_libdir}/pkgconfig/libdvdcss.pc
 
 %changelog
+* Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.4.0-2
+- Moved the shared object symlink to the devel package as expected.
+
 * Mon Jan 11 2016 Naftuli Kay <rfkrocktk@gmail.com> - 1.4.0-1
 - Update to 1.4.0.
 - Forked the upstream repository, building it for myself now.

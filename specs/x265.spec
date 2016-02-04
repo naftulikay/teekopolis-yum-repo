@@ -2,7 +2,7 @@
 
 %define package_name x265
 %define package_version 1.8
-%define package_release 2
+%define package_release 3
 
 Summary: x265 HEVC Video Encoder
 Name: %{package_name}
@@ -107,7 +107,6 @@ Summary: x265 Shared Library
 x265 Shared Library
 # files
 %files -n libx265
-%{_libdir}/libx265.so
 %{_libdir}/libx265.so.*
 %exclude %{_libdir}/libx265.a
 # post
@@ -122,9 +121,13 @@ x265 Shared Library (Development Files)
 %files -n libx265-devel
 %{_includedir}/x265.h
 %{_includedir}/x265_config.h
+%{_libdir}/libx265.so
 %{_libdir}/pkgconfig/x265.pc
 
 %changelog
+* Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.8-3
+- Moved the shared object symlink to the devel package as expected.
+
 * Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.8-2
 - Build shared library with all bit depths using some major crazy hacks. Default bit depth is 8, but bit depths are
   present for all depths (e.g. 10 and 12).
