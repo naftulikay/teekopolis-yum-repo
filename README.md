@@ -117,8 +117,7 @@ internet:
 
 Things to fix:
 
- - [ ] LAME binary has an RPATH.
- - [ ] MakeMKV binaries and libraries are in bad shape.
+ - [ ] MakeMKV binaries and libraries are in bad shape, security-wise.
 
 Everything else fully passes the `checksec --file` test, returning the following:
 
