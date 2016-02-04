@@ -2,7 +2,7 @@
 
 %define package_name lame
 %define package_version 3.99.5
-%define package_release 2
+%define package_release 3
 
 Summary: LAME Ain't an MP3 Encoder.
 Name: %{package_name}
@@ -19,6 +19,7 @@ Requires: ncurses >= 5.0
 BuildRequires: ncurses-devel
 BuildRequires: pkgconfig
 BuildRequires: checksec
+BuildRequires: chrpath
 %ifarch %{ix86} x86_64
 BuildRequires: nasm
 %endif
@@ -30,7 +31,6 @@ LAME Ain't an MP3 Encoder.
 %setup
 
 %build
-sed -i -e 's/^\(\s*hardcode_libdir_flag_spec\s*=\).*/\1/' configure
 
 %ifarch %{ix86}
 export CFLAGS="$RPM_OPT_FLAGS -ffast-math"
@@ -51,10 +51,12 @@ sed -i -e '/xmmintrin\.h/d' configure
 %install
 %make_install
 %{__ln_s} -f lame/lame.h %{buildroot}%{_includedir}/lame.h
+# die runpath die
+chrpath --delete %{buildroot}%{_bindir}/lame
 
 %check
-checksec --file frontend/.libs/lame
-checksec --file libmp3lame/.libs/libmp3lame.so.0.0.0
+checksec --file %{buildroot}%{_bindir}/lame
+checksec --file %{buildroot}%{_libdir}/libmp3lame.so.0.0.0
 
 %post -p /sbin/ldconfig
 
