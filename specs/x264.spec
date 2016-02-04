@@ -16,6 +16,7 @@ Packager: Naftuli Tzvi Kay <rfkrocktk@gmail.com>
 URL: https://www.videolan.org/developers/x264.html
 Group: Applications/Multimedia
 Source: https://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-%{package_builddate}-%{package_buildtime}-stable.tar.bz2
+Requires: libx264 = %{version}-%{release}
 BuildRequires: yasm
 
 %description
@@ -55,7 +56,7 @@ x264 Shared Library
 
 %package -n libx264-devel
 Summary: x264 Shared Library (Development Files)
-Requires: libx264 = %{package_version}
+Requires: libx264 = %{version}-%{release}
 # description
 %description -n libx264-devel
 x264 Shared Library (Development Files)

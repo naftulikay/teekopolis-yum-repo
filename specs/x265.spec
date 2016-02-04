@@ -14,7 +14,7 @@ Packager: Naftuli Tzvi Kay <rfkrocktk@gmail.com>
 URL: https://github.com/videolan/x265
 Group: Applications/Multimedia
 Source: https://download.videolan.org/pub/videolan/x265/x265_1.8.tar.gz
-Requires: libx265 = %{package_version}
+Requires: libx265 = %{version}-%{release}
 BuildRequires: yasm >= 1.3.0, cmake, ncurses-devel
 
 Patch0: x265-patch-0001-pic.patch
