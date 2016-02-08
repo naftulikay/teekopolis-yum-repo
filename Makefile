@@ -22,6 +22,7 @@ fetch_sources:
 	spectool -g -S -C sources/ specs/ffmpeg.spec
 	spectool -g -S -C sources/ specs/handbrake.spec
 	spectool -g -S -C sources/ specs/lame.spec
+	spectool -g -S -C sources/ specs/liba52.spec
 	spectool -g -S -C sources/ specs/libdvdcss.spec
 	spectool -g -S -C sources/ specs/libfdk-aac.spec
 	spectool -g -S -C sources/ specs/libmad.spec
@@ -38,6 +39,7 @@ build_srpms: fetch_sources
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/ffmpeg.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/lame.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/handbrake.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/liba52.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libdvdcss.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libfdk-aac.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmad.spec
