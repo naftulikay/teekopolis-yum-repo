@@ -2,7 +2,7 @@
 
 %define package_name x264
 %define package_version 148
-%define package_release 3
+%define package_release 4
 %define package_builddate 20160203
 %define package_buildtime 2245
 
@@ -26,18 +26,32 @@ x264 H.264 Video Encoder
 
 %setup -n x264-snapshot-%{package_builddate}-%{package_buildtime}-stable
 
-%configure \
-    --enable-pic \
-    --disable-static \
-    --enable-shared \
-    --system-libx264
-
 %build
+%configure \
+    --enable-debug \
+    --enable-pic \
+    --enable-shared \
+    --system-libx264 \
+    --bit-depth=10
+
+# compile shared library to libx264_main10.so.$version
+sed -i -e 's:SONAME=libx264\.so\.\([0-9]\{1,\}\):SONAME=libx264_main10.so.\1:g' config.mak
+
+make %{?_smp_mflags}
+
+%configure \
+    --enable-debug \
+    --enable-pic \
+    --enable-shared \
+    --system-libx264 \
+    --bit-depth=8
+
 make %{?_smp_mflags}
 
 %install
-
 %make_install
+install -m 0755 libx264_main10.so.* %{buildroot}%{_libdir}/
+( cd %{buildroot}%{_libdir} && ln -sf libx264_main10.so.* libx264_main10.so )
 
 %files
 %{_bindir}/x264
@@ -50,6 +64,7 @@ x264 Shared Library
 # files
 %files -n libx264
 %{_libdir}/libx264.so.*
+%{_libdir}/libx264_main10.so.*
 # post
 %post -n libx264 -p /sbin/ldconfig
 %postun -n libx264 -p /sbin/ldconfig
@@ -65,9 +80,13 @@ x264 Shared Library (Development Files)
 %{_includedir}/x264.h
 %{_includedir}/x264_config.h
 %{_libdir}/libx264.so
+%{_libdir}/libx264_main10.so
 %{_libdir}/pkgconfig/x264.pc
 
 %changelog
+* Sun Feb 07 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 148-4.20160203
+- Compile a 10-bit library and include for 10-bit encoding.
+
 * Thu Feb 04 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 148-3.20160203
 - Have the binary link to libx264.so instead of statically being compiled.
 
