@@ -2,7 +2,7 @@
 
 %define package_name ffmpeg
 %define package_version 2.8.6
-%define package_release 1
+%define package_release 2
 %define package_epoch 1
 
 Summary: A complete, cross-platform solution to record, convert, and stream audio and video.
@@ -66,6 +66,7 @@ BuildRequires: libwebp-devel
 BuildRequires: opencl-headers
 BuildRequires: ocl-icd-devel
 BuildRequires: libmfx-devel
+BuildRequires: libcrystalhd-devel
 # linux plugins
 BuildRequires: SDL-devel
 BuildRequires: libv4l-devel
@@ -114,6 +115,7 @@ done ;
     --enable-avfilter \
     --enable-avresample \
     --enable-bzlib \
+    --enable-crystalhd \
     --enable-doc \
     --enable-fontconfig \
     --enable-frei0r \
@@ -415,3 +417,7 @@ libswscale-devel
 %{_libdir}/libswscale.so
 %{_libdir}/pkgconfig/libswscale.pc
 %{_prefix}/share/man/man3/libswscale.3.gz
+
+%changelog
+* Mon Feb 08 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 2.8.6-2
+- Enable CrystalHD hardware accelerated decoding.
