@@ -136,3 +136,8 @@ Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RU
     * `gstreamer-plugins-bad`
     * `gstreamer-plugins-ugly`
     * `gstreamer-plugins-libav`
+
+# Credits
+
+Thanks to [Simone Caronni](http://negativo17.org/handbrake/) for much of the inspiration and work done on packaging
+things.
