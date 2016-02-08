@@ -129,7 +129,6 @@ Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RU
 ## To Do
 
  - [ ] Test and verify package signing.
- - [ ] Package a52dec for DVD audio playback.
  - [ ] Package VLC.
  - [ ] Package GStreamer plugins:
     * `gstreamer-plugins-bad`
