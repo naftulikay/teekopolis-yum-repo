@@ -39,6 +39,7 @@ make %{?_smp_mflags} CFLAGS="%{optflags}"
 
 %package devel
 Summary: MAD: MPEG Audio Decoder
+Requires: libmad = %{version}-%{release}
 %description devel
 Header files for libmad.
 %files devel
