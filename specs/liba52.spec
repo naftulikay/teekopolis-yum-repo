@@ -38,6 +38,10 @@ chrpath --delete src/.libs/a52dec
 %files
 %{_libdir}/liba52.so.*
 
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
 %package devel
 Summary: liba52 is a free library for decoding ATSC A/52 streams (development files).
 Requires: liba52 = %{version}-%{release}

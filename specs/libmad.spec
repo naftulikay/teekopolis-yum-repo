@@ -37,6 +37,10 @@ make %{?_smp_mflags} CFLAGS="%{optflags}"
 %files
 %{_libdir}/libmad.so.*
 
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
 %package devel
 Summary: MAD: MPEG Audio Decoder
 Requires: libmad = %{version}-%{release}
