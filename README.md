@@ -130,6 +130,7 @@ Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RU
 
  - [ ] Test and verify package signing.
  - [ ] Package VLC.
+ - [ ] Package StepMania.
  - [ ] Package GStreamer plugins:
     * `gstreamer-plugins-bad`
     * `gstreamer-plugins-ugly`
