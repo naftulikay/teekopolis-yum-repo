@@ -24,6 +24,7 @@ fetch_sources:
 	spectool -g -S -C sources/ specs/lame.spec
 	spectool -g -S -C sources/ specs/libdvdcss.spec
 	spectool -g -S -C sources/ specs/libfdk-aac.spec
+	spectool -g -S -C sources/ specs/libmad.spec
 	spectool -g -S -C sources/ specs/libmfx.spec
 	spectool -g -S -C sources/ specs/libvo-aacenc.spec
 	spectool -g -S -C sources/ specs/libvo-amrwbenc.spec
@@ -39,6 +40,7 @@ build_srpms: fetch_sources
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/handbrake.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libdvdcss.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libfdk-aac.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmad.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmfx.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-aacenc.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-amrwbenc.spec
