@@ -1,0 +1,13 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 61a1c95..7135e1a 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -295,7 +295,7 @@ else() # Linux
+     if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
+       message("Host processor is 64bit")
+       sm_add_compile_definition("${SM_EXE_NAME}" CPU_X86_64)
+-    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86")
++    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86" OR CMAKE_SYSTEM_PROCESSOR MATCHES "i686")
+       message("Host processor is 32bit")
+       sm_add_compile_definition("${SM_EXE_NAME}" CPU_X86)
+     else()

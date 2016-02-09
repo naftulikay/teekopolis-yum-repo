@@ -1,0 +1,12 @@
+diff --git a/CMake/SetupFfmpeg.cmake b/CMake/SetupFfmpeg.cmake
+index b700b67..910c9b2 100644
+--- a/CMake/SetupFfmpeg.cmake
++++ b/CMake/SetupFfmpeg.cmake
+@@ -20,6 +20,7 @@ list(APPEND FFMPEG_CONFIGURE
+   "--disable-avfilter"
+   "--disable-shared"
+   "--enable-static"
++  "--enable-pic"
+ )
+ 
+ if(MACOSX)
