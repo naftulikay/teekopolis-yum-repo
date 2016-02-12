@@ -31,31 +31,44 @@ fetch_sources:
 	spectool -g -S -C sources/ specs/libvo-amrwbenc.spec
 	spectool -g -S -C sources/ specs/libxvidcore.spec
 	spectool -g -S -C sources/ specs/makemkv.spec
+	spectool -g -S -C sources/ specs/stepmania.spec
 	spectool -g -S -C sources/ specs/x264.spec
 	spectool -g -S -C sources/ specs/x265.spec
 
 build_srpms: fetch_sources
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/aacplusenc.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/ffmpeg.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/lame.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/handbrake.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/liba52.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libdvdcss.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libfdk-aac.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmad.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmfx.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-aacenc.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-amrwbenc.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libxvidcore.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/makemkv.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/x264.spec
-	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/x265.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/aacplusenc.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/ffmpeg.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/lame.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/handbrake.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/liba52.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libdvdcss.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libfdk-aac.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmad.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmfx.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-aacenc.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-amrwbenc.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libxvidcore.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/makemkv.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/stepmania.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/x264.spec
+	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/x265.spec
+
+build-stepmania-srpm:
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/stepmania.spec
 
 build_rpms:
 	# build i686 RPMS
 	mockchain -r fedora-23-i386 -l build --recurse build/source/*.src.rpm
 	# build x86_64 RPMS
 	mockchain -r fedora-23-x86_64 -l build --recurse build/source/*.src.rpm
+
+build-stepmania-rpm: build-stepmania-rpm-i386 build-stepmania-rpm-x86_64
+
+build-stepmania-rpm-i386:
+	mock -r build/configs/fedora-23-i386/fedora-23-i386.cfg --rebuild build/source/stepmania-5.0.10-?.fc23.src.rpm
+
+build-stepmania-rpm-x86_64:
+	mock -r build/configs/fedora-23-x86_64/fedora-23-x86_64.cfg --rebuild build/source/stepmania-5.0.10-?.fc23.src.rpm
 
 deploy_repo:
 	# copy all rpms into the repo folder

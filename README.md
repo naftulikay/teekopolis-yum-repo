@@ -118,6 +118,10 @@ internet:
 Things to fix:
 
  - [ ] MakeMKV binaries and libraries are in bad shape, security-wise.
+ - [ ] StepMania is statically linked to its dependencies, we can only await an upstream solution where the source code
+       is updated to use modern libraries.
+ - [ ] StepMania's GTK 2 loading screen doesn't have a stack canary; somehow it's getting compiled without a stack
+       protector.
 
 Everything else fully passes the `checksec --file` test, returning the following:
 
@@ -130,7 +134,6 @@ Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RU
 
  - [ ] Test and verify package signing.
  - [ ] Package VLC.
- - [ ] Package StepMania.
  - [ ] Package GStreamer plugins:
     * `gstreamer-plugins-bad`
     * `gstreamer-plugins-ugly`
