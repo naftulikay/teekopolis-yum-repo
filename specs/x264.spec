@@ -2,8 +2,8 @@
 
 %define package_name x264
 %define package_version 148
-%define package_release 4
-%define package_builddate 20160203
+%define package_release 5
+%define package_builddate 20160213
 %define package_buildtime 2245
 
 Summary: The x264 H.264 video encoder.
@@ -35,7 +35,7 @@ x264 H.264 Video Encoder
     --bit-depth=10
 
 # compile shared library to libx264_main10.so.$version
-sed -i -e 's:SONAME=libx264\.so\.\([0-9]\{1,\}\):SONAME=libx264_main10.so.\1:g' config.mak
+sed -i -e 's:SONAME=libx264\.so\.\([0-9]\{1,\}\):SONAME=libx264_main10.so:g' config.mak
 
 make %{?_smp_mflags}
 
@@ -50,8 +50,7 @@ make %{?_smp_mflags}
 
 %install
 %make_install
-install -m 0755 libx264_main10.so.* %{buildroot}%{_libdir}/
-( cd %{buildroot}%{_libdir} && ln -sf libx264_main10.so.* libx264_main10.so )
+install -m 0755 libx264_main10.so %{buildroot}%{_libdir}/
 
 %files
 %{_bindir}/x264
@@ -64,7 +63,7 @@ x264 Shared Library
 # files
 %files -n libx264
 %{_libdir}/libx264.so.*
-%{_libdir}/libx264_main10.so.*
+%{_libdir}/libx264_main10.so
 # post
 %post -n libx264 -p /sbin/ldconfig
 %postun -n libx264 -p /sbin/ldconfig
@@ -80,10 +79,13 @@ x264 Shared Library (Development Files)
 %{_includedir}/x264.h
 %{_includedir}/x264_config.h
 %{_libdir}/libx264.so
-%{_libdir}/libx264_main10.so
 %{_libdir}/pkgconfig/x264.pc
 
 %changelog
+* Sat Feb 13 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 148-5.20160213
+- Stop trying to be smart, put the 10-bit library in the right static unversioned place. Also, update to latest stable
+  snapshot.
+
 * Sun Feb 07 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 148-4.20160203
 - Compile a 10-bit library and include for 10-bit encoding.
 
