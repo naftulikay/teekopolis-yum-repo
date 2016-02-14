@@ -2,7 +2,7 @@
 
 %define package_name handbrake
 %define package_version 1.0.0
-%define package_release 1
+%define package_release 2
 %define package_git_long b63b0bb81471ca6d8aa89fc3800126dfe91d84bc
 %define package_git_short %(c=%{package_git_long}; echo ${c:0:7})
 
@@ -21,7 +21,7 @@ Requires: libdvdcss%{_isa}
 BuildRequires: bzip2-devel
 BuildRequires: ffmpeg-devel
 BuildRequires: liba52-devel
-BuildRequires: libx265-devel
+BuildRequires: libx265-devel >= 1.9-1
 BuildRequires: libx264-devel
 BuildRequires: libmpeg2-devel
 BuildRequires: cmake
@@ -154,6 +154,9 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+* Sat Feb 13 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.0.0-2.b63b0bb
+- Rebuild on new x265 library.
+
 * Fri Feb 12 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.0.0-1.ba5eb77f
 - Build HandBrake from master with external FFMPEG and everything. Up to date as of 2016-02-14 05:48:33 +0000. Cannot
   use the --enable-qsv flag because of our linking to a system FFMPEG: https://j.mp/1SphwL1

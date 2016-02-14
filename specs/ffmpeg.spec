@@ -2,8 +2,7 @@
 
 %define package_name ffmpeg
 %define package_version 2.8.6
-%define package_release 2
-%define package_epoch 1
+%define package_release 3
 
 Summary: A complete, cross-platform solution to record, convert, and stream audio and video.
 Name: %{package_name}
@@ -55,7 +54,7 @@ BuildRequires: libvo-amrwbenc-devel
 # video libraries
 BuildRequires: libvpx-devel
 BuildRequires: libx264-devel
-BuildRequires: libx265-devel
+BuildRequires: libx265-devel >= 1.9-1
 BuildRequires: schroedinger-devel
 BuildRequires: libxvidcore-devel
 # video effect libraries
@@ -419,5 +418,8 @@ libswscale-devel
 %{_prefix}/share/man/man3/libswscale.3.gz
 
 %changelog
+* Sat Feb 13 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 2.8.6-3
+- Rebuild on new x265 library.
+
 * Mon Feb 08 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 2.8.6-2
 - Enable CrystalHD hardware accelerated decoding.

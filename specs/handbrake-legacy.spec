@@ -2,7 +2,7 @@
 
 %define package_name handbrake-legacy
 %define package_version 0.10.3
-%define package_release 1
+%define package_release 2
 
 Name: %{package_name}
 Version: %{package_version}
@@ -19,7 +19,7 @@ Requires: libdvdcss%{_isa}
 
 BuildRequires: ffmpeg-devel
 BuildRequires: liba52-devel
-BuildRequires: libx265-devel
+BuildRequires: libx265-devel >= 1.9-1
 BuildRequires: libx264-devel
 BuildRequires: cmake
 BuildRequires: bzip2-devel
@@ -147,5 +147,8 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+* Sat Feb 13 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.10.3-2
+- Repackage on new x265 library.
+
 * Fri Feb 12 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.10.3-1
 - Renaming package to handbrake-legacy so we can support the newest mainline HandBrake.
