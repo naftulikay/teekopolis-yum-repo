@@ -13,6 +13,7 @@ Packager: Naftuli Tzvi Kay <rfkrocktk@gmail.com>
 URL: http://stepmania.com
 Group: Applications/Multimedia
 Source: https://github.com/stepmania/stepmania/archive/v%{package_version}.tar.gz#/stepmania-%{package_version}.tar.gz
+Source1: https://github.com/ffmpeg/ffmpeg/archive/n2.1.3.tar.gz#/ffmpeg-linux-2.1.3.tar.gz
 Patch0: stepmania-patch-0001-ffmpeg-pic.patch
 Patch1: stepmania-patch-0002-cmake-i386.patch
 Patch2: stepmania-patch-0003-static-libraries.patch
@@ -43,6 +44,7 @@ BuildRequires: glibc-common
 BuildRequires: glibc-devel
 BuildRequires: glibc-headers
 BuildRequires: gtk2-devel
+BuildRequires: json-c-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: kernel-headers
 BuildRequires: libX11-devel
@@ -117,7 +119,12 @@ support, and an editor for creating your own steps.
 %patch2 -p1
 sed -i 's:Exec=stepmania:Exec=/usr/share/stepmania-5.0/stepmania:g' stepmania.desktop
 
+cp %{SOURCE1} extern/
+( cd extern && tar xzf ffmpeg-linux-2.1.3.tar.gz && mv FFmpeg-n2.1.3 ffmpeg-linux-2.1.3 )
+
 %build
+export http_proxy=http://127.0.0.1
+
 %cmake -G "Unix Makefiles" \
     -DCMAKE_INSTALL_PREFIX=/usr/share \
     -DCMAKE_SKIP_RPATH:BOOL=YES \
