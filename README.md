@@ -133,6 +133,7 @@ Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RU
 ## To Do
 
  - [ ] Test and verify package signing.
+ - [ ] Try removing as many StepMania static dependencies as possible without segfaulting.
  - [ ] Package VLC.
  - [ ] Package GStreamer plugins:
     * `gstreamer-plugins-bad`
