@@ -2,7 +2,7 @@
 
 .PHONY: all
 
-all: fetch_sources build_srpms build_rpms prune_repo deploy_repo gen_repo_metadata
+all: fetch_sources build_srpms build_rpms deploy_repo prune_repo gen_repo_metadata
 
 sign: sign_rpms gen_repo_metadata
 
@@ -21,6 +21,7 @@ fetch_sources:
 	spectool -g -S -C sources/ specs/aacplusenc.spec
 	spectool -g -S -C sources/ specs/ffmpeg.spec
 	spectool -g -S -C sources/ specs/handbrake.spec
+	spectool -g -S -C sources/ specs/handbrake-legacy.spec
 	spectool -g -S -C sources/ specs/lame.spec
 	spectool -g -S -C sources/ specs/liba52.spec
 	spectool -g -S -C sources/ specs/libdvdcss.spec
@@ -36,22 +37,23 @@ fetch_sources:
 	spectool -g -S -C sources/ specs/x265.spec
 
 build_srpms: fetch_sources
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/aacplusenc.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/ffmpeg.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/lame.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/handbrake.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/liba52.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libdvdcss.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libfdk-aac.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmad.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmfx.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-aacenc.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-amrwbenc.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libxvidcore.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/makemkv.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/aacplusenc.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/ffmpeg.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/lame.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/handbrake.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/handbrake-legacy.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/liba52.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libdvdcss.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libfdk-aac.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmad.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmfx.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-aacenc.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-amrwbenc.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libxvidcore.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/makemkv.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/stepmania.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/x264.spec
-	#mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/x265.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/x264.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/x265.spec
 
 build-stepmania-srpm:
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/stepmania.spec

@@ -1,29 +1,26 @@
 %global _hardened_build 1
 
-%define package_name handbrake
-%define package_version 1.0.0
+%define package_name handbrake-legacy
+%define package_version 0.10.3
 %define package_release 1
-%define package_git_long b63b0bb81471ca6d8aa89fc3800126dfe91d84bc
-%define package_git_short %(c=%{package_git_long}; echo ${c:0:7})
 
 Name: %{package_name}
 Version: %{package_version}
-Release: %{package_release}.%{package_git_short}%{?dist}
+Release: %{package_release}%{?dist}
 Summary: HandBrake is a tool for converting video from nearly any format to a selection of modern, widely supported codecs.
 License: GPLv2
 URL: https://handbrake.fr
-Source: https://github.com/HandBrake/HandBrake/archive/%{package_git_long}.tar.gz#/HandBrake-%{package_git_short}.tar.gz
-Patch0: handbrake-patch-0001-qsv.patch
+Source: https://handbrake.fr/mirror/HandBrake-%{package_version}.tar.bz2
+Source1: http://download.handbrake.fr/handbrake/contrib/libav-v10.1.tar.bz2
+Patch0: handbrake-legacy-patch-0001-ffmpeg-pic.patch
 
-Conflicts: handbrake-legacy
+Conflicts: handbrake
 Requires: libdvdcss%{_isa}
 
-BuildRequires: bzip2-devel
 BuildRequires: ffmpeg-devel
 BuildRequires: liba52-devel
 BuildRequires: libx265-devel
 BuildRequires: libx264-devel
-BuildRequires: libmpeg2-devel
 BuildRequires: cmake
 BuildRequires: bzip2-devel
 BuildRequires: dbus-glib-devel
@@ -63,14 +60,16 @@ BuildRequires: webkitgtk3-devel
 BuildRequires: wget
 BuildRequires: yasm
 BuildRequires: zlib-devel
-BuildRequires: checksec
 
 %description
 HandBrake is a tool for converting video from nearly any format to a selection of modern, widely supported codecs.
 
 %prep -q
 
-%setup -q -n HandBrake-%{package_git_long}
+%setup -q -n HandBrake-%{package_version}
+mkdir download/
+cp %{SOURCE1} download/
+
 %patch0 -p1
 
 %build
@@ -93,18 +92,12 @@ done ;
     /usr/bin/sed -i.backup -e 's~compiler_flags=$~compiler_flags="-specs=/usr/lib/rpm/redhat/redhat-hardened-ld"~' $i
   done ;
 
-for module in a52dec ffmpeg fdk-aac libdvdnav libdvdread libbluray libmfx libvpx x265 x264; do
+for module in a52dec fdk-aac libdvdnav libdvdread libbluray libmfx libvpx x265 x264; do
   sed -i -e "/MODULES += contrib\/$module/d" make/include/main.defs
 done
 
-echo "GCC.args.O.speed = %{optflags} -lavcodec -lavdevice -lavfilter -lavformat -lavresample -lavutil -lpostproc -lswresample -lswscale -lx265 -lx264 -lfdk-aac -lmfx" > custom.defs
+echo "GCC.args.O.speed = %{optflags} -lx265 -lx264 -lfdk-aac -lmfx" > custom.defs
 echo "GCC.args.g.none = " >> custom.defs
-
-cat > version.txt <<EOF
-HASH=%{package_git_long}
-SHORTHASH=%{package_git_short}
-DATE=$(date -u +'%Y-%m-%d %H:%M:%S %z')
-EOF
 
 export http_proxy=http://127.0.0.1
 
@@ -112,8 +105,11 @@ export http_proxy=http://127.0.0.1
     --arch=%{_target_cpu} \
     --build=build \
     --prefix=%{_prefix} \
+    --enable-x265 \
+    --enable-qsv \
     --enable-fdk-aac \
-    --verbose
+    --enable-libav-aac
+
 
 make -C build %{?_smp_mflags}
 
@@ -122,17 +118,14 @@ make -C build %{?_smp_mflags}
 desktop-file-validate %{buildroot}/%{_datadir}/applications/ghb.desktop
 %find_lang ghb
 
-%check
-checksec --file %{buildroot}%{_bindir}/HandBrakeCLI
-checksec --file %{buildroot}%{_bindir}/ghb
-
 %files
 %{_bindir}/HandBrakeCLI
 
 %package gtk
 Summary: HandBrake GUI
-Conflicts: handbrake-legacy-gtk
-Requires: handbrake
+Conflicts: handbrake-gtk
+Requires: handbrake-legacy
+Requires: libdvdcss%{_isa}
 Requires: hicolor-icon-theme
 Requires: desktop-file-utils
 %description gtk
@@ -154,6 +147,5 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
-* Fri Feb 12 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.0.0-1.ba5eb77f
-- Build HandBrake from master with external FFMPEG and everything. Up to date as of 2016-02-14 05:48:33 +0000. Cannot
-  use the --enable-qsv flag because of our linking to a system FFMPEG: https://j.mp/1SphwL1
+* Fri Feb 12 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.10.3-1
+- Renaming package to handbrake-legacy so we can support the newest mainline HandBrake.
