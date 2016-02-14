@@ -1,8 +1,8 @@
 %global _hardened_build 1
 
 %define package_name x265
-%define package_version 1.8
-%define package_release 4
+%define package_version 1.9
+%define package_release 1
 
 Summary: x265 HEVC Video Encoder
 Name: %{package_name}
@@ -13,7 +13,7 @@ Vendor: multicoreware
 Packager: Naftuli Tzvi Kay <rfkrocktk@gmail.com>
 URL: https://github.com/videolan/x265
 Group: Applications/Multimedia
-Source: https://download.videolan.org/pub/videolan/x265/x265_1.8.tar.gz
+Source: https://download.videolan.org/pub/videolan/x265/x265_%{package_version}.tar.gz
 Requires: libx265 = %{version}-%{release}
 BuildRequires: yasm >= 1.3.0, cmake, ncurses-devel
 
@@ -136,6 +136,9 @@ x265 Shared Library (Development Files)
 %{_libdir}/pkgconfig/x265.pc
 
 %changelog
+* Sat Feb 13 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.9-1
+- Update to 1.9.
+
 * Thu Feb 04 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.8-4
 - Fix compilation for i386. x265 doesn't support high bit depth on 32-bit platforms, so compilation was failing.
   See: https://j.mp/1oaRTkx. Therefore, on i386, we compile in only 8-bit mode. If you're still on i386, buy a new

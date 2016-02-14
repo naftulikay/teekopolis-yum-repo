@@ -1,6 +1,7 @@
-diff -up x265_1.8/source/test/CMakeLists.txt.shared x265_1.8/source/test/CMakeLists.txt
---- x265_1.8/source/test/CMakeLists.txt.shared	2015-09-22 10:10:07.000000000 +0200
-+++ x265_1.8/source/test/CMakeLists.txt	2015-10-24 12:15:04.846236808 +0200
+diff --git a/source/test/CMakeLists.txt b/source/test/CMakeLists.txt
+index ee7c7df..d3a4657 100644
+--- a/source/test/CMakeLists.txt
++++ b/source/test/CMakeLists.txt
 @@ -23,7 +23,7 @@ add_executable(TestBench ${YASM_SRC}
      mbdstharness.cpp mbdstharness.h
      ipfilterharness.cpp ipfilterharness.h
