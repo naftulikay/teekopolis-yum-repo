@@ -135,6 +135,10 @@ Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RU
  - [ ] Test and verify package signing.
  - [ ] Try removing as many StepMania static dependencies as possible without segfaulting.
  - [ ] Package VLC.
+ - [ ] Package MPV.
+ - [ ] Package NVIDIA driver and CUDA and recompile FFMPEG with NVIDIA support.
+ - [ ] Package ATI driver.
+ - [ ] Package Blender with FFMPEG and CUDA support.
  - [ ] Package GStreamer plugins:
     * `gstreamer-plugins-bad`
     * `gstreamer-plugins-ugly`
