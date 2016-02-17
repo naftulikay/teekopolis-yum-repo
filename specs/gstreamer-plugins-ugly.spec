@@ -2,7 +2,7 @@
 
 %define package_name gstreamer-plugins-ugly
 %define package_version 0.10.19
-%define package_release 1
+%define package_release 2
 
 Name: %{package_name}
 Version: %{package_version}
@@ -13,6 +13,7 @@ Source: https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-
 URL: https://gstreamer.freedesktop.org/modules/gst-plugins-ugly.html
 
 Patch0: gstreamer-plugins-ugly-patch-0001-fix-cdio.patch
+Patch1: gstreamer-plugins-ugly-patch-0002-fix-amr.patch
 
 BuildRequires: gettext-devel
 BuildRequires: gtk-doc
@@ -24,6 +25,7 @@ BuildRequires: libid3tag-devel
 BuildRequires: libmp3lame-devel
 BuildRequires: libmad-devel
 BuildRequires: libmpeg2-devel
+BuildRequires: libopencore-amr-devel
 BuildRequires: libsidplayfp-devel
 BuildRequires: libvo-amrwbenc-devel
 BuildRequires: libx264-devel
@@ -43,6 +45,7 @@ Ugly GStreamer plugins.
 
 %setup -n gst-plugins-ugly-%{package_version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure \
@@ -64,6 +67,8 @@ make %{?_smp_mflags}
 
 %files -f gst-plugins-ugly-0.10.lang
 %doc AUTHORS COPYING README REQUIREMENTS
+%{_libdir}/gstreamer-0.10/libgstamrnb.so
+%{_libdir}/gstreamer-0.10/libgstamrwbdec.so
 %{_libdir}/gstreamer-0.10/libgstcdio.so
 %{_libdir}/gstreamer-0.10/libgsta52dec.so
 %{_libdir}/gstreamer-0.10/libgstasf.so
@@ -95,5 +100,8 @@ Development stuff.
 %{_datadir}/gtk-doc/html/gst-plugins-ugly-plugins-0.10/*
 
 %changelog
+* Thu Feb 18 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.10.19-2
+- Repackaged with OpenCore AMR wideband and narrowband support.
+
 * Tue Feb 16 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.10.19-1
 - Packaged for the glorious City of Teekopolis.

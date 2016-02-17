@@ -2,7 +2,7 @@
 
 %define package_name gstreamer1-plugins-ugly
 %define package_version 1.6.3
-%define package_release 1
+%define package_release 2
 
 Name: %{package_name}
 Version: %{package_version}
@@ -23,6 +23,7 @@ BuildRequires: libid3tag-devel
 BuildRequires: libmp3lame-devel
 BuildRequires: libmad-devel
 BuildRequires: libmpeg2-devel
+BuildRequires: libopencore-amr-devel
 BuildRequires: libsidplayfp-devel
 BuildRequires: libvo-amrwbenc-devel
 BuildRequires: libx264-devel
@@ -62,6 +63,8 @@ make %{?_smp_mflags}
 
 %files -f gst-plugins-ugly-1.0.lang
 %doc AUTHORS COPYING README REQUIREMENTS
+%{_libdir}/gstreamer-1.0/libgstamrnb.so
+%{_libdir}/gstreamer-1.0/libgstamrwbdec.so
 %{_libdir}/gstreamer-1.0/libgstcdio.so
 %{_libdir}/gstreamer-1.0/libgsta52dec.so
 %{_libdir}/gstreamer-1.0/libgstasf.so
@@ -91,5 +94,8 @@ Development stuff.
 %{_datadir}/gtk-doc/html/gst-plugins-ugly-plugins-1.0/*
 
 %changelog
+* Thu Feb 18 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.6.3-2
+- Repackaged with OpenCore AMR wideband and narrowband support.
+
 * Tue Feb 16 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.6.3-1
 - Packaged for the glorious City of Teekopolis.

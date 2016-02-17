@@ -141,9 +141,6 @@ Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RU
  - [ ] Package Blender with FFMPEG and CUDA support.
  - [ ] Package GStreamer plugins:
     * `gstreamer-plugins-bad`
- - [ ] Package OpenCore AMR-NB
-    * Rebuild FFMPEG with support.
-    * Rebuild GStreamer plugins with support.
 
 # Credits
 
