@@ -2,7 +2,7 @@
 
 %define package_name ffmpeg
 %define package_version 2.8.6
-%define package_release 3
+%define package_release 4
 
 Summary: A complete, cross-platform solution to record, convert, and stream audio and video.
 Name: %{package_name}
@@ -51,6 +51,7 @@ BuildRequires: libaacplus
 BuildRequires: libaacplus-devel
 BuildRequires: libvo-aacenc-devel
 BuildRequires: libvo-amrwbenc-devel
+BuildRequires: libopencore-amr-devel
 # video libraries
 BuildRequires: libvpx-devel
 BuildRequires: libx264-devel
@@ -132,6 +133,8 @@ done ;
     --disable-libkvazaar \
     --enable-libmfx \
     --enable-libmp3lame \
+    --enable-libopencore-amrnb \
+    --enable-libopencore-amrwb \
     --enable-libopus \
     --enable-libpulse \
     --enable-libschroedinger \
@@ -418,6 +421,9 @@ libswscale-devel
 %{_prefix}/share/man/man3/libswscale.3.gz
 
 %changelog
+* Thu Feb 18 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 2.8.6-4
+- Rebuild with OpenCore AMR wideband and narrowband support.
+
 * Sat Feb 13 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 2.8.6-3
 - Rebuild on new x265 library.
 
