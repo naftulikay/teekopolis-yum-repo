@@ -20,6 +20,9 @@ upload:
 fetch_sources:
 	spectool -g -S -C sources/ specs/aacplusenc.spec
 	spectool -g -S -C sources/ specs/ffmpeg.spec
+	spectool -g -S -C sources/ specs/gstreamer1-plugins-libav.spec
+	spectool -g -S -C sources/ specs/gstreamer1-plugins-ugly.spec
+	spectool -g -S -C sources/ specs/gstreamer-plugins-ugly.spec
 	spectool -g -S -C sources/ specs/handbrake.spec
 	spectool -g -S -C sources/ specs/handbrake-legacy.spec
 	spectool -g -S -C sources/ specs/lame.spec
@@ -40,6 +43,9 @@ build_srpms: fetch_sources
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/aacplusenc.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/ffmpeg.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/lame.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/gstreamer1-plugins-libav.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/gstreamer1-plugins-ugly.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/gstreamer-plugins-ugly.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/handbrake.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/handbrake-legacy.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/liba52.spec
