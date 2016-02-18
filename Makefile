@@ -35,6 +35,7 @@ fetch_sources:
 	spectool -g -S -C sources/ specs/libvo-amrwbenc.spec
 	spectool -g -S -C sources/ specs/libxvidcore.spec
 	spectool -g -S -C sources/ specs/makemkv.spec
+	spectool -g -S -C sources/ specs/opencore-amr.spec
 	spectool -g -S -C sources/ specs/stepmania.spec
 	spectool -g -S -C sources/ specs/x264.spec
 	spectool -g -S -C sources/ specs/x265.spec
@@ -57,6 +58,7 @@ build_srpms: fetch_sources
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-amrwbenc.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libxvidcore.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/makemkv.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/opencore-amr.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/stepmania.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/x264.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/x265.spec
