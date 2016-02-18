@@ -35,6 +35,9 @@ BuildRequires:  pkgconfig(libavcodec)
 BuildRequires:  pkgconfig(libavutil)
 BuildRequires:	qt4-devel
 
+BuildRequires: checksec
+BuildRequires: chrpath
+
 Requires:       hicolor-icon-theme
 %ifarch x86_64
 Requires: mmdtsdec(%{__isa_name}-32)
@@ -101,6 +104,14 @@ setenv LIBBDPLUS_PATH %{_libdir}/libmmbd.so.0
 setenv LIBAACS_PATH %{_libdir}/libmmbd.so.0
 EOF
 
+# remove rpath
+chrpath --delete %{buildroot}%{_bindir}/mmdtsdec
+chrpath --delete %{buildroot}%{_bindir}/makemkv
+chrpath --delete %{buildroot}%{_bindir}/makemkvcon
+chrpath --delete %{buildroot}%{_libdir}/libdriveio.so.0
+chrpath --delete %{buildroot}%{_libdir}/libmakemkv.so.1
+chrpath --delete %{buildroot}%{_libdir}/libmmbd.so.0
+
 %ifarch x86_64
 rm -f %{buildroot}/%{_bindir}/mmdtsdec
 %endif
@@ -118,6 +129,16 @@ fi
 
 %posttrans
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
+%check
+%ifarch %{ix86}
+checksec --file %{buildroot}%{_bindir}/mmdtsdec
+%endif
+checksec --file %{buildroot}%{_bindir}/makemkv
+checksec --file %{buildroot}%{_bindir}/makemkvcon
+checksec --file %{buildroot}%{_libdir}/libdriveio.so.0
+checksec --file %{buildroot}%{_libdir}/libmakemkv.so.1
+checksec --file %{buildroot}%{_libdir}/libmmbd.so.0
 
 %files
 %doc makemkv-bin-%{version}/src/eula_en_linux.txt
@@ -139,6 +160,8 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %endif
 
 %changelog
+* Thu Feb 18 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.9.9-3
+- Strip rpath, add checksec to build.
 
- * Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.9.9-2
- - Fix cross architecture dependencies.
+* Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.9.9-2
+- Fix cross architecture dependencies.
