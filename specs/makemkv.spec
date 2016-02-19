@@ -13,7 +13,7 @@
 
 %define package_name makemkv
 %define package_version 1.9.9
-%define package_release 2
+%define package_release 3
 
 Summary:        DVD and Blu-ray to MKV converter and network streamer.
 Name:           %{package_name}
