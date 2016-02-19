@@ -2,7 +2,7 @@
 
 %define package_name handbrake-legacy
 %define package_version 0.10.3
-%define package_release 2
+%define package_release 3
 
 Name: %{package_name}
 Version: %{package_version}
@@ -61,6 +61,8 @@ BuildRequires: wget
 BuildRequires: yasm
 BuildRequires: zlib-devel
 
+BuildRequires: checksec
+
 %description
 HandBrake is a tool for converting video from nearly any format to a selection of modern, widely supported codecs.
 
@@ -73,24 +75,10 @@ cp %{SOURCE1} download/
 %patch0 -p1
 
 %build
-%ifarch %{ix86}
-%define arch_bits 32
-%else
-%define arch_bits 64
-%endif
-
-CFLAGS="${CFLAGS:--O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m%{arch_bits} -mtune=generic}" ; export CFLAGS ;
-CXXFLAGS="${CXXFLAGS:--O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m%{arch_bits} -mtune=generic}" ; export CXXFLAGS ;
-FFLAGS="${FFLAGS:--O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m%{arch_bits} -mtune=generic -I/usr/lib64/gfortran/modules}" ; export FFLAGS ;
-FCFLAGS="${FCFLAGS:--O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m%{arch_bits} -mtune=generic -I/usr/lib64/gfortran/modules}" ; export FCFLAGS ;
-LDFLAGS="${LDFLAGS:--Wl,-z,relro -specs=/usr/lib/rpm/redhat/redhat-hardened-ld}"; export LDFLAGS;
-[ "1" = 1 ] && for i in $(find $(dirname ./configure) -name config.guess -o -name config.sub) ; do
-  [ -f /usr/lib/rpm/redhat/$(basename $i) ] && /usr/bin/rm -f $i && /usr/bin/cp -fv /usr/lib/rpm/redhat/$(basename $i) $i ;
-done ;
-[ "1" = 1 ] && [ x != "x-specs=/usr/lib/rpm/redhat/redhat-hardened-ld" ] &&
-  find . -name ltmain.sh | while read i ; do
-    /usr/bin/sed -i.backup -e 's~compiler_flags=$~compiler_flags="-specs=/usr/lib/rpm/redhat/redhat-hardened-ld"~' $i
-  done ;
+# this lets us take advantage of the proper CFLAGS, LDFLAGS, etc.
+%define _configure ./configure2
+echo '#!/bin/true' > ./configure2 && chmod +x ./configure2
+%configure
 
 for module in a52dec fdk-aac libdvdnav libdvdread libbluray libmfx libvpx x265 x264; do
   sed -i -e "/MODULES += contrib\/$module/d" make/include/main.defs
@@ -110,13 +98,16 @@ export http_proxy=http://127.0.0.1
     --enable-fdk-aac \
     --enable-libav-aac
 
-
-make -C build %{?_smp_mflags}
+%make_build -C build
 
 %install
 %make_install -C build
 desktop-file-validate %{buildroot}/%{_datadir}/applications/ghb.desktop
 %find_lang ghb
+
+%check
+checksec --file %{buildroot}%{_bindir}/HandBrakeCLI
+checksec --file %{buildroot}%{_bindir}/ghb
 
 %files
 %{_bindir}/HandBrakeCLI
@@ -147,6 +138,9 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+* Thu Feb 18 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.10.3-3
+- Rebuild with a macro hack.
+
 * Sat Feb 13 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.10.3-2
 - Repackage on new x265 library.
 

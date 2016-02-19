@@ -2,7 +2,7 @@
 
 %define package_name ffmpeg
 %define package_version 2.8.6
-%define package_release 4
+%define package_release 5
 
 Summary: A complete, cross-platform solution to record, convert, and stream audio and video.
 Name: %{package_name}
@@ -79,6 +79,8 @@ BuildRequires:  libva-devel
 BuildRequires:  yasm
 %endif
 
+BuildRequires: checksec
+
 %description
 A complete, cross-platform solution to record, convert, and stream audio and video.
 
@@ -87,24 +89,11 @@ A complete, cross-platform solution to record, convert, and stream audio and vid
 %setup -q
 
 %build
-%ifarch %{ix86}
-%define arch_bits 32
-%else
-%define arch_bits 64
-%endif
 
-CFLAGS="${CFLAGS:--O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m%{arch_bits} -mtune=generic}" ; export CFLAGS ;
-CXXFLAGS="${CXXFLAGS:--O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m%{arch_bits} -mtune=generic}" ; export CXXFLAGS ;
-FFLAGS="${FFLAGS:--O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m%{arch_bits} -mtune=generic -I/usr/lib64/gfortran/modules}" ; export FFLAGS ;
-FCFLAGS="${FCFLAGS:--O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m%{arch_bits} -mtune=generic -I/usr/lib64/gfortran/modules}" ; export FCFLAGS ;
-LDFLAGS="${LDFLAGS:--Wl,-z,relro -specs=/usr/lib/rpm/redhat/redhat-hardened-ld}"; export LDFLAGS;
-[ "1" = 1 ] && for i in $(find $(dirname ./configure) -name config.guess -o -name config.sub) ; do
-  [ -f /usr/lib/rpm/redhat/$(basename $i) ] && /usr/bin/rm -f $i && /usr/bin/cp -fv /usr/lib/rpm/redhat/$(basename $i) $i ;
-done ;
-[ "1" = 1 ] && [ x != "x-specs=/usr/lib/rpm/redhat/redhat-hardened-ld" ] &&
-  find . -name ltmain.sh | while read i ; do
-    /usr/bin/sed -i.backup -e 's~compiler_flags=$~compiler_flags="-specs=/usr/lib/rpm/redhat/redhat-hardened-ld"~' $i
-  done ;
+# this lets us take advantage of the proper CFLAGS, LDFLAGS, etc.
+%define _configure ./configure2
+echo '#!/bin/true' > ./configure2 && chmod +x ./configure2
+%configure
 
 ./configure \
     --arch=%{_target_cpu} \
@@ -198,10 +187,18 @@ done ;
 %endif
 %endif
 
-make %{?_smp_mflags}
+%make_build
 
 %install
 %make_install
+
+%check
+checksec --file %{buildroot}%{_bindir}/ffmpeg
+checksec --file %{buildroot}%{_bindir}/ffplay
+checksec --file %{buildroot}%{_bindir}/ffprobe
+checksec --file %{buildroot}%{_bindir}/ffserver
+
+find %{buildroot}%{_libdir} -type f -iname '*.so.*' -exec checksec --file {} \;
 
 %files
 %{_bindir}/ffmpeg
@@ -421,6 +418,9 @@ libswscale-devel
 %{_prefix}/share/man/man3/libswscale.3.gz
 
 %changelog
+* Thu Feb 18 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 2.8.6-5
+- Rebuild with a macro hack and checksec on the build.
+
 * Thu Feb 18 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 2.8.6-4
 - Rebuild with OpenCore AMR wideband and narrowband support.
 
