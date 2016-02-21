@@ -2,7 +2,7 @@
 
 %define package_name handbrake
 %define package_version 1.0.0
-%define package_release 3
+%define package_release 4
 %define package_git_long b63b0bb81471ca6d8aa89fc3800126dfe91d84bc
 %define package_git_short %(c=%{package_git_long}; echo ${c:0:7})
 
@@ -13,13 +13,14 @@ Summary: HandBrake is a tool for converting video from nearly any format to a se
 License: GPLv2
 URL: https://handbrake.fr
 Source: https://github.com/HandBrake/HandBrake/archive/%{package_git_long}.tar.gz#/HandBrake-%{package_git_short}.tar.gz
-Patch0: handbrake-patch-0001-qsv.patch
+Source1: http://download.handbrake.fr/handbrake/contrib/libav-v11.3-0-g00abc00.tar.gz
+Patch0: handbrake-legacy-patch-0001-ffmpeg-pic.patch
+Patch1: handbrake-patch-0001-qsv.patch
 
 Conflicts: handbrake-legacy
 Requires: libdvdcss%{_isa}
 
 BuildRequires: bzip2-devel
-BuildRequires: ffmpeg-devel
 BuildRequires: liba52-devel
 BuildRequires: libx265-devel >= 1.9-1
 BuildRequires: libx264-devel
@@ -71,7 +72,11 @@ HandBrake is a tool for converting video from nearly any format to a selection o
 %prep -q
 
 %setup -q -n HandBrake-%{package_git_long}
+mkdir download/
+cp %{SOURCE1} download/
+
 %patch0 -p1
+%patch1 -p1
 
 %build
 # this lets us take advantage of the proper CFLAGS, LDFLAGS, etc.
@@ -79,11 +84,11 @@ HandBrake is a tool for converting video from nearly any format to a selection o
 echo '#!/bin/true' > ./configure2 && chmod +x ./configure2
 %configure
 
-for module in a52dec ffmpeg fdk-aac libdvdnav libdvdread libbluray libmfx libvpx x265 x264; do
+for module in a52dec fdk-aac libdvdnav libdvdread libbluray libmfx libvpx x265 x264; do
   sed -i -e "/MODULES += contrib\/$module/d" make/include/main.defs
 done
 
-echo "GCC.args.O.speed = %{optflags} -lavcodec -lavdevice -lavfilter -lavformat -lavresample -lavutil -lpostproc -lswresample -lswscale -lx265 -lx264 -lfdk-aac -lmfx" > custom.defs
+echo "GCC.args.O.speed = %{optflags} -lx265 -lx264 -lfdk-aac -lmfx" > custom.defs
 echo "GCC.args.g.none = " >> custom.defs
 
 cat > version.txt <<EOF
@@ -99,6 +104,7 @@ export http_proxy=http://127.0.0.1
     --build=build \
     --prefix=%{_prefix} \
     --enable-fdk-aac \
+    --enable-qsv \
     --verbose
 
 %make_build -C build
@@ -140,6 +146,9 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+* Sat Feb 20 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.0.0-4.b63b0bb
+- Rebuild with internal FFMPEG.
+
 * Thu Feb 18 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.0.0-3.b63b0bb
 - Rebuild with a macro hack.
 
