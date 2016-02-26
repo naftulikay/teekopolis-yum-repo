@@ -2,9 +2,13 @@
 
 %define package_name handbrake
 %define package_version 1.0.0
-%define package_release 4
-%define package_git_long b63b0bb81471ca6d8aa89fc3800126dfe91d84bc
+%define package_release 5
+%define package_git_long 25133845793a73400dd77792969b1d8b94dea6fd 
 %define package_git_short %(c=%{package_git_long}; echo ${c:0:7})
+
+%{?_with_debug: %define debug_package %{nil}}
+%{?_with_debug: %define __strip /bin/true }
+
 
 Name: %{package_name}
 Version: %{package_version}
@@ -15,7 +19,6 @@ URL: https://handbrake.fr
 Source: https://github.com/HandBrake/HandBrake/archive/%{package_git_long}.tar.gz#/HandBrake-%{package_git_short}.tar.gz
 Source1: http://download.handbrake.fr/handbrake/contrib/libav-v11.3-0-g00abc00.tar.gz
 Patch0: handbrake-legacy-patch-0001-ffmpeg-pic.patch
-Patch1: handbrake-patch-0001-qsv.patch
 
 Conflicts: handbrake-legacy
 Requires: libdvdcss%{_isa}
@@ -76,7 +79,6 @@ mkdir download/
 cp %{SOURCE1} download/
 
 %patch0 -p1
-%patch1 -p1
 
 %build
 # this lets us take advantage of the proper CFLAGS, LDFLAGS, etc.
@@ -105,7 +107,9 @@ export http_proxy=http://127.0.0.1
     --prefix=%{_prefix} \
     --enable-fdk-aac \
     --enable-qsv \
-    --verbose
+    --verbose \
+%{?_with_debug: --debug=std}
+
 
 %make_build -C build
 
@@ -146,6 +150,9 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+* Thu Feb 25 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.0.0-5.2513384
+- Fix crash with newer upstream version with patch from jstebbins.
+
 * Sat Feb 20 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.0.0-4.b63b0bb
 - Rebuild with internal FFMPEG.
 
