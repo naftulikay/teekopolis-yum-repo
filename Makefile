@@ -28,6 +28,8 @@ fetch_sources:
 	spectool -g -S -C sources/ specs/lame.spec
 	spectool -g -S -C sources/ specs/liba52.spec
 	spectool -g -S -C sources/ specs/libdvdcss.spec
+	spectool -g -S -C sources/ specs/libdvdread.spec
+	spectool -g -S -C sources/ specs/libdvdnav.spec
 	spectool -g -S -C sources/ specs/libfdk-aac.spec
 	spectool -g -S -C sources/ specs/libmad.spec
 	spectool -g -S -C sources/ specs/libmfx.spec
@@ -51,6 +53,8 @@ build_srpms: fetch_sources
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/handbrake-legacy.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/liba52.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libdvdcss.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libdvdread.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libdvdnav.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libfdk-aac.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmad.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmfx.spec
