@@ -2,11 +2,13 @@
 
 %define package_name libdvdread
 %define package_version 5.0.3
-%define package_release 3
+%define package_release 5
+%define package_epoch 1
 
 Name: %{package_name}
 Version: %{package_version}
 Release: %{package_release}%{?dist}
+Epoch: %{package_epoch}
 Summary: A library for reading DVD video discs based on Ogle code
 License: GPLv2+
 URL: http://dvdnav.mplayerhq.hu/
@@ -28,8 +30,7 @@ the functionality that is required to access many DVDs.
 %build
 %configure \
     --disable-static \
-    --with-pic \
-    --with-libdvdcss
+    --with-pic
 
 %make_build
 
@@ -51,7 +52,7 @@ checksec --file %{buildroot}%{_libdir}/libdvdread.so.4.2.0
 
 %package        devel
 Summary:        Development files for libdvdread
-Requires:       libdvdread = %{version}-%{release}
+Requires:       libdvdread = %{epoch}:%{version}-%{release}
 Requires:       pkgconfig
 %description    devel
 libdvdread provides a simple foundation for reading DVD video disks. It provides
@@ -66,6 +67,12 @@ This package contains development files for libdvdread.
 %exclude %{_docdir}/libdvdread
 
 %changelog
+* Mon Feb 29 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1:5.0.3-5
+- Rebuild on older libdvdcss.
+
+* Mon Feb 29 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1:5.0.3-4
+- Bump epoch to always have priority.
+
 * Fri Feb 26 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 5.0.3-3
 - Forked and linked to libdvdcss.
 

@@ -2,8 +2,8 @@
 
 %define package_name handbrake
 %define package_version 1.0.0
-%define package_release 5
-%define package_git_long 25133845793a73400dd77792969b1d8b94dea6fd 
+%define package_release 7
+%define package_git_long 25133845793a73400dd77792969b1d8b94dea6fd
 %define package_git_short %(c=%{package_git_long}; echo ${c:0:7})
 
 %{?_with_debug: %define debug_package %{nil}}
@@ -43,8 +43,8 @@ BuildRequires: libmp3lame-devel
 BuildRequires: libappindicator-gtk3-devel
 BuildRequires: libass-devel
 BuildRequires: libbluray-devel >= 0.2.3
-BuildRequires: libdvdnav-devel >= 5.0.1
-BuildRequires: libdvdread-devel >= 5.0.0
+BuildRequires: libdvdnav-devel >= 1:5.0.1
+BuildRequires: libdvdread-devel >= 1:5.0.0
 BuildRequires: libfdk-aac-devel >= 0.1.4
 BuildRequires: libgudev1-devel
 BuildRequires: libmfx-devel
@@ -150,6 +150,12 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+* Sun Mar 13 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.0.0-7.2513384
+- Rebuild on older libdvdcss.
+
+* Mon Feb 29 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.0.0-6.2513384
+- Rebuild on new libdvdnav and libdvdread.
+
 * Thu Feb 25 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.0.0-5.2513384
 - Fix crash with newer upstream version with patch from jstebbins.
 

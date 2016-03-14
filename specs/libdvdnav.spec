@@ -2,18 +2,20 @@
 
 %define package_name libdvdnav
 %define package_version 5.0.3
-%define package_release 4
+%define package_release 5
+%define package_epoch 1
 
 Name: %{package_name}
 Version: %{package_version}
 Release: %{package_release}%{?dist}
+Epoch: %{package_epoch}
 Summary: A library for reading DVD video discs based on Ogle code
 License: GPLv2+
 URL: http://dvdnav.mplayerhq.hu/
 Source: https://download.videolan.org/pub/videolan/libdvdnav/%{package_version}/libdvdnav-%{package_version}.tar.bz2
 
 BuildRequires: doxygen
-BuildRequires: libdvdread-devel >= %{package_version}
+BuildRequires: libdvdread-devel >= 1:
 BuildRequires: checksec
 
 %description
@@ -52,8 +54,8 @@ checksec --file %{buildroot}%{_libdir}/libdvdnav.so.4.2.0
 
 %package devel
 Summary: Development files for libdvdnav
-Requires: libdvdnav = %{version}-%{release}
-Requires: libdvdread-devel >= %{package_version}
+Requires: libdvdnav = %{epoch}:%{version}-%{release}
+Requires: libdvdread-devel >= %{epoch}:%{package_version}
 Requires: pkgconfig
 %description devel
 libdvdnav-devel contains the files necessary to build packages that use the
@@ -66,6 +68,9 @@ libdvdnav library.
 %exclude %{_docdir}/libdvdnav
 
 %changelog
+* Mon Feb 29 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1:5.0.3-5
+- Bump epoch to always have priority.
+
 * Fri Feb 26 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 5.0.3-4
 - Forked and rebuilt.
 

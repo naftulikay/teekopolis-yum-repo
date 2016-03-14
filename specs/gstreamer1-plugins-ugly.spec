@@ -2,7 +2,7 @@
 
 %define package_name gstreamer1-plugins-ugly
 %define package_version 1.6.3
-%define package_release 2
+%define package_release 4
 
 Name: %{package_name}
 Version: %{package_version}
@@ -17,8 +17,8 @@ BuildRequires: gtk-doc
 
 BuildRequires: liba52-devel
 BuildRequires: libcdio-devel
-BuildRequires: libdvdnav-devel
-BuildRequires: libdvdread-devel
+BuildRequires: libdvdnav-devel >= 1:
+BuildRequires: libdvdread-devel >= 1:
 BuildRequires: libid3tag-devel
 BuildRequires: libmp3lame-devel
 BuildRequires: libmad-devel
@@ -94,6 +94,12 @@ Development stuff.
 %{_datadir}/gtk-doc/html/gst-plugins-ugly-plugins-1.0/*
 
 %changelog
+* Sun Mar 13 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.6.3-4
+- Rebuild on older libdvdcss.
+
+* Mon Feb 29 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.6.3-3
+- Rebuild on new libdvdnav and libdvdread.
+
 * Thu Feb 18 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.6.3-2
 - Repackaged with OpenCore AMR wideband and narrowband support.
 

@@ -1,8 +1,8 @@
 %global _hardened_build 1
 
 %define package_name libdvdcss
-%define package_version 1.4.0
-%define package_release 2
+%define package_version 1.2.13
+%define package_release 1
 
 Summary:        A portable abstraction library for DVD decryption
 Name:           %{package_name}
@@ -13,6 +13,9 @@ URL:            https://www.videolan.org/%{name}/
 Source:         https://download.videolan.org/pub/%{name}/%{version}/%{name}-%{version}.tar.bz2
 
 BuildRequires:  doxygen
+
+BuildRequires: checksec
+
 Requires(post): ldconfig
 
 %description
@@ -42,6 +45,9 @@ make %{_smp_mflags}
 %make_install
 rm -fr %{buildroot}%{_docdir}/%{name}
 
+%check
+checksec --file %{buildroot}%{_libdir}/libdvdcss.so.2.1.0
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -59,6 +65,9 @@ rm -fr %{buildroot}%{_docdir}/%{name}
 %{_libdir}/pkgconfig/libdvdcss.pc
 
 %changelog
+* Thu Mar 10 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.2.13-1
+- Revert to an earlier version which works for me on Ubuntu.
+
 * Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.4.0-2
 - Moved the shared object symlink to the devel package as expected.
 
