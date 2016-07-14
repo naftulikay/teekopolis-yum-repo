@@ -6,18 +6,20 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.define "fedora23" do |fedora23|
+  config.vm.define "fedora24" do |fedora24|
 #   create a Fedora 23 box for building Fedora 23 packages
-    fedora23.vm.box = "fedora/fedora-cloud-23"
-    fedora23.vm.box_url = "https://download.fedoraproject.org/pub/fedora/linux/releases/23/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-23-20151030.x86_64.vagrant-virtualbox.box"
-    fedora23.vm.hostname = "fedora23"
+    fedora24.vm.box = "fedora/fedora-cloud-24"
+    fedora24.vm.box_url = "https://download.fedoraproject.org/pub/fedora/linux/releases/24/CloudImages/x86_64/images/Fedora-Cloud-Base-Vagrant-24-1.2.x86_64.vagrant-virtualbox.box"
+    fedora24.vm.hostname = "fedora24"
 
-    fedora23.vm.provision "ansible_local" do |ansible|
+    fedora24.vm.provision "shell", inline: "dnf install -y bash-completion make gcc python-2.7.11 libselinux-python python2-dnf python-devel"
+
+    fedora24.vm.provision "ansible" do |ansible|
       ansible.playbook = "ansible/vagrant.yml"
       ansible.sudo = true
     end
 
-    fedora23.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    fedora24.vm.synced_folder ".", "/vagrant", type: "virtualbox"
   end
 
   # Create a private network, which allows host-only access to the machine
@@ -26,10 +28,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider "virtualbox" do |vb|
     # Use VBoxManage to customize the VM. For example to change memory:
-    vb.customize ["modifyvm", :id, "--memory", "2048"]
-
-    # use host cores - 2 for the box
-    host_cores = `grep -i "^processor" /proc/cpuinfo | wc -l`.strip.to_i
-    vb.customize ["modifyvm", :id, "--cpus", [host_cores - 2, 1].max]
+    vb.customize ["modifyvm", :id, "--memory", "4096"]
+    # 8 VCPUs
+    vb.customize ["modifyvm", :id, "--cpus", "8"]
   end
 end

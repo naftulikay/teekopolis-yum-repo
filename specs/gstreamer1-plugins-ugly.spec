@@ -1,8 +1,8 @@
 %global _hardened_build 1
 
 %define package_name gstreamer1-plugins-ugly
-%define package_version 1.6.3
-%define package_release 4
+%define package_version 1.8.2
+%define package_release 1
 
 Name: %{package_name}
 Version: %{package_version}
@@ -94,6 +94,9 @@ Development stuff.
 %{_datadir}/gtk-doc/html/gst-plugins-ugly-plugins-1.0/*
 
 %changelog
+* Sun Jul 17 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.8.2-1
+- Rebuild for Fedora 24.
+
 * Sun Mar 13 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.6.3-4
 - Rebuild on older libdvdcss.
 
