@@ -2,7 +2,7 @@
 
 %define package_name libfdk-aac
 %define package_version 0.1.4
-%define package_release 2
+%define package_release 3
 
 Name:           %{package_name}
 Version:        %{package_version}
@@ -20,6 +20,11 @@ Advanced Audio Coding Decoder/Encoder Library.
 %setup -n fdk-aac-%{package_version}
 
 %build
+
+# on newer versions of gcc, -Wnarrowing is passed, breaking package building
+%if 0%{?fedora} > 23 || 0%{?rhel} > 8
+export CXXFLAGS="%{optflags} -Wno-narrowing"
+%endif
 
 %configure --disable-static
 
@@ -50,6 +55,9 @@ developing applications that use libfdk-aac.
 %{_libdir}/pkgconfig/fdk-aac.pc
 
 %changelog
+* Sun Jul 17 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.1.4-3
+- Repackage for Fedora 24, thanks to negativo17.org for fix.
+
 * Wed Feb 03 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.1.4-2
 - Moved the shared object symlink to the devel package as expected.
 

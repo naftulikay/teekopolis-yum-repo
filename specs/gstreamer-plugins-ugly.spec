@@ -2,7 +2,7 @@
 
 %define package_name gstreamer-plugins-ugly
 %define package_version 0.10.19
-%define package_release 4
+%define package_release 5
 
 Name: %{package_name}
 Version: %{package_version}
@@ -51,7 +51,6 @@ Ugly GStreamer plugins.
 %configure \
     --enable-shared \
     --enable-debug \
-    --enable-gtk-doc \
     --disable-static \
     --disable-rpath \
     --with-pic
@@ -91,15 +90,10 @@ find %{buildroot} -iname '*.so' | sort | while read file ; do
     checksec --file $file
 done
 
-%package devel
-Summary: Development stuff.
-Requires: %{name} >= %{version}
-%description devel
-Development stuff.
-%files devel
-%{_datadir}/gtk-doc/html/gst-plugins-ugly-plugins-0.10/*
-
 %changelog
+* Sun Jul 17 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.10.19-5
+- Repackage for Fedora 24, remove docs because they were breaking the build.
+
 * Sun Mar 13 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 0.10.19-4
 - Rebuild on older libdvdcss.
 

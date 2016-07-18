@@ -1,4 +1,4 @@
 ---
 preserve:
     - pattern: .*
-      min-versions: 1
+      min-versions: 2

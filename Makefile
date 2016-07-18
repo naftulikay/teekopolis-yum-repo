@@ -33,6 +33,7 @@ fetch_sources:
 	spectool -g -S -C sources/ specs/libfdk-aac.spec
 	spectool -g -S -C sources/ specs/libmad.spec
 	spectool -g -S -C sources/ specs/libmfx.spec
+	spectool -g -S -C sources/ specs/libmpeg2.spec
 	spectool -g -S -C sources/ specs/libvo-aacenc.spec
 	spectool -g -S -C sources/ specs/libvo-amrwbenc.spec
 	spectool -g -S -C sources/ specs/libxvidcore.spec
@@ -58,6 +59,7 @@ build_srpms: fetch_sources
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libfdk-aac.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmad.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmfx.spec
+	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libmpeg2.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-aacenc.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libvo-amrwbenc.spec
 	mock -q --buildsrpm --sources sources/ --resultdir build/source --spec specs/libxvidcore.spec
@@ -72,32 +74,32 @@ build-stepmania-srpm:
 
 build_rpms:
 	# build i686 RPMS
-	mockchain -r fedora-23-i386 -l build --recurse build/source/*.src.rpm
+	mockchain -r fedora-24-i386 -l build --recurse build/source/*.src.rpm
 	# build x86_64 RPMS
-	mockchain -r fedora-23-x86_64 -l build --recurse build/source/*.src.rpm
+	mockchain -r fedora-24-x86_64 -l build --recurse build/source/*.src.rpm
 
 build-stepmania-rpm: build-stepmania-rpm-i386 build-stepmania-rpm-x86_64
 
 build-stepmania-rpm-i386:
-	mock -r build/configs/fedora-23-i386/fedora-23-i386.cfg --rebuild build/source/stepmania-5.0.10-?.fc23.src.rpm
+	mock -r build/configs/fedora-24-i386/fedora-24-i386.cfg --rebuild build/source/stepmania-5.0.10-?.fc24.src.rpm
 
 build-stepmania-rpm-x86_64:
-	mock -r build/configs/fedora-23-x86_64/fedora-23-x86_64.cfg --rebuild build/source/stepmania-5.0.10-?.fc23.src.rpm
+	mock -r build/configs/fedora-24-x86_64/fedora-24-x86_64.cfg --rebuild build/source/stepmania-5.0.10-?.fc24.src.rpm
 
 deploy_repo:
 	# copy all rpms into the repo folder
-	test -d build/repo/fedora-23 || mkdir -p build/repo/fedora-23
-	find build/results/fedora-23-i386 build/results/fedora-23-x86_64 -type f -iname '*.rpm' \
-		-exec cp {} build/repo/fedora-23 \;
+	test -d build/repo/fedora-24 || mkdir -p build/repo/fedora-24
+	find build/results/fedora-24-i386 build/results/fedora-24-x86_64 -type f -iname '*.rpm' \
+		-exec cp {} build/repo/fedora-24 \;
 
 gen_repo_metadata:
-	( cd build/repo/fedora-23 && createrepo . )
+	( cd build/repo/fedora-24 && createrepo . )
 
 prune_repo:
 	prune-rpm-repo -v --config prune-repo.yml build/repo/ build/source/ build/results
 
 sign_rpms:
-	find build/repo -type f -iname '*.rpm' -exec rpmsign -D "_gpg_name $(GPG_KEY_ID)" --addsign {} \;
+	find build/repo -type f -iname '*.rpm' | xargs rpmsign -D "_gpg_name $(GPG_KEY_ID)" --addsign
 
 clean_build:
 	find build -mindepth 1 -maxdepth 1 -not -iname '.gitignore' -exec rm -fr {} \;

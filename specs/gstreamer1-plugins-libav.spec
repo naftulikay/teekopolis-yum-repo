@@ -1,7 +1,7 @@
 %global _hardened_build 1
 
 %define package_name gstreamer1-plugins-libav
-%define package_version 1.6.3
+%define package_version 1.8.2
 %define package_release 1
 
 Name: %{package_name}
@@ -9,7 +9,7 @@ Version: %{package_version}
 Release: %{package_release}%{?dist}
 Summary: Ugly GStreamer plugins.
 License: LGPL, but worse.
-Source: https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.6.3.tar.xz
+Source: https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-%{package_version}.tar.xz
 URL: https://gstreamer.freedesktop.org/modules/gst-plugins-ugly.html
 
 BuildRequires: gettext-devel
@@ -67,5 +67,8 @@ Development stuff.
 %{_datadir}/gtk-doc/html/gst-libav-plugins-1.0/*
 
 %changelog
+* Sun Jul 17 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.8.2-1
+  Repackage for Fedora 24.
+
 * Wed Feb 17 2016 Naftuli Tzvi Kay <rfkrocktk@gmail.com> - 1.6.3-1
 - Initial packaging.
